@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Building2, Users, Search, Plus, Edit2, Trash2, Eye, MapPin, Phone, Star, CheckCircle, XCircle } from 'lucide-react';
+import { superAdminVenueApi } from '../../../api/services/superAdminVenueService';
+import { superAdminApi } from '../../../api/services/superAdminService';
+import type { GetAllVenuesResponse } from '../../../api/dto/superAdminVenueDto';
+import type { AdminInfoResponse } from '../../../api/dto/superAdminDto';
 
 interface Venue {
     id: number;
@@ -11,69 +15,34 @@ interface Venue {
     image?: string;
 }
 
-interface Staff {
-    id: number;
-    fullName: string;
-    email: string;
-    phone: string;
-    venue: string;
-    role: string;
-    status: 'ACTIVE' | 'BLOCKED';
-}
+interface Staff extends AdminInfoResponse {}
 
 const Venues: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'venues' | 'staff'>('venues');
     const [searchQuery, setSearchQuery] = useState('');
+    const [venues, setVenues] = useState<GetAllVenuesResponse[]>([]);
+    const [staff, setStaff] = useState<AdminInfoResponse[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    // Mock data - will be replaced with real API calls
-    const mockVenues: Venue[] = [
-        {
-            id: 1,
-            name: 'Navat Restaurant',
-            address: '123 Chui Ave, Bishkek',
-            phone: '+996 312 900 000',
-            rating: 4.8,
-            status: 'ACTIVE',
-            image: '/logo.png',
-        },
-        {
-            id: 2,
-            name: 'Sky Lounge Bar',
-            address: '456 Manas St, Bishkek',
-            phone: '+996 550 123 456',
-            rating: 4.5,
-            status: 'ACTIVE',
-        },
-        {
-            id: 3,
-            name: 'Chaikhana Vostok',
-            address: '789 Tobochieva St, Bishkek',
-            phone: '+996 777 789 012',
-            rating: 4.2,
-            status: 'PENDING',
-        },
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const [venuesResponse, staffResponse] = await Promise.all([
+                    superAdminVenueApi.getAllVenues(),
+                    superAdminApi.getMyPersonal(),
+                ]);
+                setVenues(venuesResponse.data);
+                setStaff(staffResponse.data);
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const mockStaff: Staff[] = [
-        {
-            id: 1,
-            fullName: 'Azamat Baatyrov',
-            email: 'azamat@eelepkal.com',
-            phone: '+996 700 111 222',
-            venue: 'Navat Restaurant',
-            role: 'Admin',
-            status: 'ACTIVE',
-        },
-        {
-            id: 2,
-            fullName: 'Aigerim Kalyeva',
-            email: 'aigerim@eelepkal.com',
-            phone: '+996 777 333 444',
-            venue: 'Sky Lounge Bar',
-            role: 'Manager',
-            status: 'ACTIVE',
-        },
-    ];
+        fetchData();
+    }, []);
 
     const getStatusBadge = (status: string) => {
         const styles = {
@@ -98,15 +67,15 @@ const Venues: React.FC = () => {
         );
     };
 
-    const filteredVenues = mockVenues.filter((venue) =>
+    const filteredVenues = venues.filter((venue) =>
         venue.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         venue.address.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const filteredStaff = mockStaff.filter((staff) =>
-        staff.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        staff.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        staff.venue.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredStaff = staff.filter((staffMember) =>
+        staffMember.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        staffMember.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (staffMember.venueName || '').toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -140,7 +109,7 @@ const Venues: React.FC = () => {
                     <Building2 className="w-4 h-4 mr-2" />
                     Заведения
                     <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${activeTab === 'venues' ? 'bg-primary-600' : 'bg-slate-200'}`}>
-                        {mockVenues.length}
+                        {venues.length}
                     </span>
                 </button>
                 <button
@@ -156,7 +125,7 @@ const Venues: React.FC = () => {
                     <Users className="w-4 h-4 mr-2" />
                     Персонал
                     <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${activeTab === 'staff' ? 'bg-primary-600' : 'bg-slate-200'}`}>
-                        {mockStaff.length}
+                        {staff.length}
                     </span>
                 </button>
             </div>
@@ -174,7 +143,12 @@ const Venues: React.FC = () => {
             </div>
 
             {/* Content */}
-            {activeTab === 'venues' ? (
+            {loading ? (
+                <div className="py-16 text-center">
+                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+                    <p className="text-slate-600 font-medium mt-4">Loading...</p>
+                </div>
+            ) : activeTab === 'venues' ? (
                 <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                     {/* Table Header */}
                     <div className="overflow-x-auto">
@@ -221,7 +195,7 @@ const Venues: React.FC = () => {
                                         <td className="px-6 py-4 hidden lg:table-cell">
                                             <div className="flex items-center text-slate-600">
                                                 <Phone className="w-4 h-4 mr-2 flex-shrink-0" />
-                                                <span className="text-sm">{venue.phone}</span>
+                                                <span className="text-sm">Not provided</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
@@ -266,7 +240,7 @@ const Venues: React.FC = () => {
                         <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
                             <p className="text-sm text-slate-600">
                                 Showing <span className="font-semibold">{filteredVenues.length}</span> of{' '}
-                                <span className="font-semibold">{mockVenues.length}</span> venues
+                                <span className="font-semibold">{venues.length}</span> venues
                             </p>
                             <div className="flex items-center gap-2">
                                 <button className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors text-sm font-medium disabled:opacity-50" disabled>
@@ -310,25 +284,25 @@ const Venues: React.FC = () => {
                                             <div className="flex items-center">
                                                 <div className="w-10 h-10 bg-gradient-to-br from-accent-100 to-accent-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
                                                     <span className="text-sm font-bold text-accent-600">
-                                                        {staff.fullName.charAt(0).toUpperCase()}
+                                                        {staffMember.fullName.charAt(0).toUpperCase()}
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <p className="font-semibold text-slate-900">{staff.fullName}</p>
-                                                    <p className="text-sm text-slate-600">{staff.email}</p>
+                                                    <p className="font-semibold text-slate-900">{staffMember.fullName}</p>
+                                                    <p className="text-sm text-slate-600">{staffMember.email}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 hidden md:table-cell">
-                                            <span className="text-sm text-slate-700">{staff.venue}</span>
+                                            <span className="text-sm text-slate-700">{staffMember.venueName || 'Not assigned'}</span>
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary-100 text-primary-700">
-                                                {staff.role}
+                                                Admin
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            {getStatusBadge(staff.status)}
+                                            {getStatusBadge(staffMember.status)}
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-end gap-2">
@@ -360,7 +334,7 @@ const Venues: React.FC = () => {
                         <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
                             <p className="text-sm text-slate-600">
                                 Showing <span className="font-semibold">{filteredStaff.length}</span> of{' '}
-                                <span className="font-semibold">{mockStaff.length}</span> staff members
+                                <span className="font-semibold">{staff.length}</span> staff members
                             </p>
                             <div className="flex items-center gap-2">
                                 <button className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors text-sm font-medium disabled:opacity-50" disabled>
