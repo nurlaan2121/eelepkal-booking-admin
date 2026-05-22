@@ -47,23 +47,23 @@ const AdminLogin: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-orange-50 px-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-primary-50/30 px-4 py-12">
             <div className="w-full max-w-md">
                 {/* Logo & Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl mb-4 shadow-lg shadow-primary/30">
-                        <Shield className="w-8 h-8 text-white" />
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl mb-4 shadow-xl shadow-primary/40">
+                        <Shield className="w-10 h-10 text-white" />
                     </div>
-                    <h1 className="text-3xl font-bold text-slate-900 mb-2">
-                        Welcome Back
+                    <h1 className="text-4xl font-bold text-slate-900 mb-2">
+                        Добро пожаловать
                     </h1>
-                    <p className="text-slate-600">
-                        Sign in to your admin account
+                    <p className="text-slate-600 text-lg">
+                        Войдите в свой аккаунт администратора
                     </p>
                 </div>
 
                 {/* Card */}
-                <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+                <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-8">
                     {/* Error Alert */}
                     {error && (
                         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
@@ -72,18 +72,18 @@ const AdminLogin: React.FC = () => {
                     )}
 
                     {/* Login Form */}
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Email */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
-                                Email Address
+                                Электронная почта
                             </label>
                             <input
                                 id="email"
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white outline-none transition-all duration-200"
+                                className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white outline-none transition-all duration-200 text-base"
                                 placeholder="admin@eelepkal.com"
                                 required
                                 disabled={loginMutation.isPending}
@@ -93,7 +93,7 @@ const AdminLogin: React.FC = () => {
                         {/* Password */}
                         <div>
                             <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
-                                Password
+                                Пароль
                             </label>
                             <div className="relative">
                                 <input
@@ -101,7 +101,7 @@ const AdminLogin: React.FC = () => {
                                     type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white outline-none transition-all duration-200"
+                                    className="w-full px-4 py-3.5 pr-12 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white outline-none transition-all duration-200 text-base"
                                     placeholder="••••••••"
                                     required
                                     disabled={loginMutation.isPending}
@@ -109,7 +109,7 @@ const AdminLogin: React.FC = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary-600 transition-colors"
                                     disabled={loginMutation.isPending}
                                 >
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -121,12 +121,12 @@ const AdminLogin: React.FC = () => {
                         <button
                             type="submit"
                             disabled={loginMutation.isPending}
-                            className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex items-center justify-center"
+                            className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-bold py-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/40 hover:shadow-xl hover:shadow-primary/50 flex items-center justify-center text-base"
                         >
                             {loginMutation.isPending ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />
                             ) : (
-                                'Sign In'
+                                'Войти'
                             )}
                         </button>
                     </form>
@@ -134,22 +134,22 @@ const AdminLogin: React.FC = () => {
                     {/* Divider */}
                     <div className="my-6 flex items-center">
                         <div className="flex-1 border-t border-slate-200" />
-                        <span className="px-4 text-xs text-slate-500">OR</span>
+                        <span className="px-4 text-xs text-slate-500">ИЛИ</span>
                         <div className="flex-1 border-t border-slate-200" />
                     </div>
 
                     {/* Register Link */}
                     <a
                         href="/auth/register"
-                        className="w-full inline-flex items-center justify-center px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors"
+                        className="w-full inline-flex items-center justify-center px-4 py-3.5 bg-primary-50 hover:bg-primary-100 text-primary-700 font-bold rounded-xl transition-colors text-base"
                     >
-                        Create Super Admin Account
+                        Создать аккаунт суперадмина
                     </a>
 
                     {/* Footer */}
                     <div className="mt-6 pt-6 border-t border-slate-200 text-center">
                         <p className="text-xs text-slate-500">
-                            © 2026 Eelep Kal. All rights reserved.
+                            © 2026 Ээлеп кал. Все права защищены.
                         </p>
                     </div>
                 </div>

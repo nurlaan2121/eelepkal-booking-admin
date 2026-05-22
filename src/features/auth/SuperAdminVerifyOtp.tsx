@@ -54,7 +54,7 @@ const SuperAdminVerifyOtp: React.FC = () => {
             navigate('/super-admin/venues', { replace: true });
         },
         onError: (error: any) => {
-            const message = error.response?.data?.message || 'Invalid or expired OTP code';
+            const message = error.response?.data?.message || 'Неверный или просроченный код';
             setError(message);
             setOtp(''); // Clear OTP on error
         },
@@ -83,7 +83,7 @@ const SuperAdminVerifyOtp: React.FC = () => {
             setResendTimer(60); // Reset timer
             setOtp(''); // Clear OTP
         } catch (err: any) {
-            setError(err.response?.data?.message || 'Failed to resend OTP');
+            setError(err.response?.data?.message || 'Не удалось отправить код повторно');
         } finally {
             setIsResending(false);
         }
@@ -100,31 +100,31 @@ const SuperAdminVerifyOtp: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-orange-50 px-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-primary-50/30 px-4 py-12">
             <div className="w-full max-w-md">
                 {/* Back Button */}
                 <button
                     onClick={() => navigate('/auth/register', { replace: true })}
-                    className="mb-6 flex items-center text-slate-600 hover:text-slate-900 transition-colors group"
+                    className="mb-6 flex items-center text-slate-600 hover:text-primary-600 transition-colors group font-medium"
                 >
                     <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Back to registration
+                    Назад к регистрации
                 </button>
 
                 {/* Card */}
-                <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+                <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-8">
                     {/* Icon & Header */}
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl mb-4">
-                            <Mail className="w-8 h-8 text-primary-600" />
+                        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl mb-4 shadow-xl shadow-primary/40">
+                            <Mail className="w-10 h-10 text-white" />
                         </div>
-                        <h1 className="text-2xl font-bold text-slate-900 mb-2">
-                            Verify Your Email
+                        <h1 className="text-3xl font-bold text-slate-900 mb-2">
+                            Подтверждение почты
                         </h1>
-                        <p className="text-slate-600 text-sm">
-                            We sent a 6-digit code to
+                        <p className="text-slate-600 text-base">
+                            Мы отправили 6-значный код на
                         </p>
-                        <p className="text-primary-600 font-semibold mt-1">
+                        <p className="text-primary-600 font-bold mt-2 text-base">
                             {email}
                         </p>
                     </div>
@@ -152,14 +152,14 @@ const SuperAdminVerifyOtp: React.FC = () => {
                     <button
                         onClick={handleVerify}
                         disabled={otp.length !== 6 || verifyMutation.isPending}
-                        className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex items-center justify-center mb-6"
+                        className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-bold py-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/40 hover:shadow-xl hover:shadow-primary/50 flex items-center justify-center mb-6 text-base"
                     >
                         {verifyMutation.isPending ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
                         ) : (
                             <>
                                 <CheckCircle className="w-5 h-5 mr-2" />
-                                Verify Email
+                                Подтвердить почту
                             </>
                         )}
                     </button>
@@ -167,31 +167,31 @@ const SuperAdminVerifyOtp: React.FC = () => {
                     {/* Resend Timer */}
                     <div className="text-center">
                         {resendTimer > 0 ? (
-                            <p className="text-sm text-slate-600">
-                                Resend code in{' '}
-                                <span className="font-semibold text-primary-500">
-                                    {resendTimer}s
+                            <p className="text-base text-slate-600">
+                                Отправить код повторно через{' '}
+                                <span className="font-bold text-primary-600">
+                                    {resendTimer}с
                                 </span>
                             </p>
                         ) : (
                             <button
                                 onClick={handleResend}
                                 disabled={isResending}
-                                className="text-sm font-semibold text-primary-500 hover:text-primary-600 transition-colors disabled:opacity-50"
+                                className="text-base font-bold text-primary-600 hover:text-primary-700 transition-colors disabled:opacity-50"
                             >
                                 {isResending ? (
                                     <Loader2 className="w-4 h-4 animate-spin inline mr-2" />
                                 ) : null}
-                                Resend Code
+                                Отправить код повторно
                             </button>
                         )}
                     </div>
                 </div>
 
                 {/* Help Text */}
-                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                    <p className="text-sm text-blue-800">
-                        <strong>Didn't receive the code?</strong> Check your spam folder or click "Resend Code" below.
+                <div className="mt-6 p-4 bg-primary-50 border border-primary-200 rounded-xl">
+                    <p className="text-sm text-primary-800">
+                        <strong>Не получили код?</strong> Проверьте папку «Спам» или нажмите «Отправить код повторно» ниже.
                     </p>
                 </div>
             </div>

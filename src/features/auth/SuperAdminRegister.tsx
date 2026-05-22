@@ -38,33 +38,33 @@ const SuperAdminRegister: React.FC = () => {
     const validateField = (name: string, value: string): string => {
         switch (name) {
             case 'fullName':
-                if (!value.trim()) return 'Full name is required';
-                if (value.trim().length < 2) return 'Name must be at least 2 characters';
+                if (!value.trim()) return 'Введите полное имя';
+                if (value.trim().length < 2) return 'Имя должно содержать минимум 2 символа';
                 return '';
             
             case 'email':
-                if (!value) return 'Email is required';
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Invalid email format';
+                if (!value) return 'Введите электронную почту';
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Неверный формат электронной почты';
                 return '';
             
             case 'phoneNumber':
-                if (!value) return 'Phone number is required';
+                if (!value) return 'Введите номер телефона';
                 if (!/^\+996\d{9}$/.test(value.replace(/\s/g, ''))) {
-                    return 'Phone must be in format: +996XXXXXXXXX';
+                    return 'Телефон должен быть в формате: +996XXXXXXXXX';
                 }
                 return '';
             
             case 'password':
-                if (!value) return 'Password is required';
-                if (value.length < 8) return 'Password must be at least 8 characters';
-                if (!/[A-Z]/.test(value)) return 'Password must contain an uppercase letter';
-                if (!/[a-z]/.test(value)) return 'Password must contain a lowercase letter';
-                if (!/[0-9]/.test(value)) return 'Password must contain a number';
+                if (!value) return 'Введите пароль';
+                if (value.length < 8) return 'Пароль должен содержать минимум 8 символов';
+                if (!/[A-Z]/.test(value)) return 'Пароль должен содержать заглавную букву';
+                if (!/[a-z]/.test(value)) return 'Пароль должен содержать строчную букву';
+                if (!/[0-9]/.test(value)) return 'Пароль должен содержать цифру';
                 return '';
             
             case 'confirmPassword':
-                if (!value) return 'Please confirm your password';
-                if (value !== formData.password) return 'Passwords do not match';
+                if (!value) return 'Подтвердите пароль';
+                if (value !== formData.password) return 'Пароли не совпадают';
                 return '';
             
             default:
@@ -123,31 +123,31 @@ const SuperAdminRegister: React.FC = () => {
         if (/[0-9]/.test(password)) score++;
         if (/[^A-Za-z0-9]/.test(password)) score++;
 
-        if (score <= 2) return { score, label: 'Weak', color: 'bg-red-500' };
-        if (score <= 4) return { score, label: 'Medium', color: 'bg-yellow-500' };
-        return { score, label: 'Strong', color: 'bg-green-500' };
+        if (score <= 2) return { score, label: 'Простой', color: 'bg-red-500' };
+        if (score <= 4) return { score, label: 'Средний', color: 'bg-yellow-500' };
+        return { score, label: 'Надёжный', color: 'bg-green-500' };
     };
 
     const passwordStrength = getPasswordStrength(formData.password);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-orange-50 px-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-primary-50/30 px-4 py-12">
             <div className="w-full max-w-lg">
                 {/* Logo & Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl mb-4 shadow-lg shadow-primary/30">
-                        <Shield className="w-8 h-8 text-white" />
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl mb-4 shadow-xl shadow-primary/40">
+                        <Shield className="w-10 h-10 text-white" />
                     </div>
-                    <h1 className="text-3xl font-bold text-slate-900 mb-2">
-                        Create Super Admin Account
+                    <h1 className="text-4xl font-bold text-slate-900 mb-2">
+                        Создание аккаунта
                     </h1>
-                    <p className="text-slate-600">
-                        Register to access the admin panel
+                    <p className="text-slate-600 text-lg">
+                        Зарегистрируйтесь для доступа к панели администратора
                     </p>
                 </div>
 
                 {/* Card */}
-                <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+                <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-8">
                     {/* Error Alert */}
                     {errors.submit && (
                         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
@@ -160,7 +160,7 @@ const SuperAdminRegister: React.FC = () => {
                         {/* Full Name */}
                         <div>
                             <label htmlFor="fullName" className="block text-sm font-semibold text-slate-700 mb-2">
-                                Full Name
+                                Полное имя
                             </label>
                             <input
                                 id="fullName"
@@ -176,7 +176,7 @@ const SuperAdminRegister: React.FC = () => {
                                         : 'border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white'
                                     }
                                 `}
-                                placeholder="John Doe"
+                                placeholder="Иван Иванов"
                                 disabled={registerMutation.isPending}
                             />
                             {errors.fullName && touched.fullName && (
@@ -187,7 +187,7 @@ const SuperAdminRegister: React.FC = () => {
                         {/* Email */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
-                                Email Address
+                                Электронная почта
                             </label>
                             <input
                                 id="email"
@@ -214,7 +214,7 @@ const SuperAdminRegister: React.FC = () => {
                         {/* Phone Number */}
                         <div>
                             <label htmlFor="phoneNumber" className="block text-sm font-semibold text-slate-700 mb-2">
-                                Phone Number
+                                Номер телефона
                             </label>
                             <input
                                 id="phoneNumber"
@@ -241,7 +241,7 @@ const SuperAdminRegister: React.FC = () => {
                         {/* Password */}
                         <div>
                             <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
-                                Password
+                                Пароль
                             </label>
                             <div className="relative">
                                 <input
@@ -293,7 +293,7 @@ const SuperAdminRegister: React.FC = () => {
                         {/* Confirm Password */}
                         <div>
                             <label htmlFor="confirmPassword" className="block text-sm font-semibold text-slate-700 mb-2">
-                                Confirm Password
+                                Подтверждение пароля
                             </label>
                             <div className="relative">
                                 <input
@@ -331,13 +331,13 @@ const SuperAdminRegister: React.FC = () => {
                         <button
                             type="submit"
                             disabled={registerMutation.isPending}
-                            className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex items-center justify-center group"
+                            className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-bold py-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/40 hover:shadow-xl hover:shadow-primary/50 flex items-center justify-center group text-base"
                         >
                             {registerMutation.isPending ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />
                             ) : (
                                 <>
-                                    Create Account & Send OTP
+                                    Создать аккаунт и отправить код
                                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                                 </>
                             )}
@@ -346,13 +346,13 @@ const SuperAdminRegister: React.FC = () => {
 
                     {/* Footer */}
                     <div className="mt-6 pt-6 border-t border-slate-200 text-center">
-                        <p className="text-sm text-slate-600">
-                            Already have an account?{' '}
+                        <p className="text-base text-slate-600">
+                            Уже есть аккаунт?{' '}
                             <a
                                 href="/login"
-                                className="font-semibold text-primary-500 hover:text-primary-600 transition-colors"
+                                className="font-bold text-primary-600 hover:text-primary-700 transition-colors"
                             >
-                                Sign in
+                                Войти
                             </a>
                         </p>
                     </div>
@@ -360,7 +360,7 @@ const SuperAdminRegister: React.FC = () => {
 
                 {/* Terms */}
                 <p className="mt-6 text-center text-xs text-slate-500">
-                    By creating an account, you agree to our Terms of Service and Privacy Policy.
+                    Создавая аккаунт, вы соглашаетесь с нашими Условиями использования и Политикой конфиденциальности.
                 </p>
             </div>
         </div>
