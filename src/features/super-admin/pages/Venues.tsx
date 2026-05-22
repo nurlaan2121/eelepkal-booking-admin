@@ -45,9 +45,9 @@ const Venues: React.FC = () => {
         return (
             <div className="flex items-center gap-0.5">
                 {Array.from({ length: fullStars }).map((_, i) => (
-                    <Star key={`full-${i}`} className="w-4 h-4 fill-orange-500 text-orange-500" />
+                    <Star key={`full-${i}`} className="w-4 h-4 fill-purple-500 text-purple-500" />
                 ))}
-                {hasHalfStar && <Star className="w-4 h-4 fill-orange-500/50 text-orange-500" />}
+                {hasHalfStar && <Star className="w-4 h-4 fill-purple-500/50 text-purple-500" />}
                 {Array.from({ length: emptyStars }).map((_, i) => (
                     <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
                 ))}
@@ -91,9 +91,9 @@ const Venues: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50/30">
-            {/* Modern Header with Gradient */}
-            <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 shadow-xl shadow-orange-500/20">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50/20">
+            {/* Modern Header with Purple/Indigo Gradient - Vendor Admin Theme */}
+            <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500 shadow-xl shadow-purple-500/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
@@ -105,7 +105,7 @@ const Venues: React.FC = () => {
                             </p>
                         </div>
                         <button 
-                            className="inline-flex items-center px-6 py-3 bg-white hover:bg-orange-50 text-orange-600 font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                            className="inline-flex items-center px-6 py-3 bg-white hover:bg-purple-50 text-purple-600 font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                             aria-label={activeTab === 'venues' ? 'Add new venue' : 'Add new admin'}
                         >
                             <Plus className="w-5 h-5 mr-2" />
@@ -123,7 +123,7 @@ const Venues: React.FC = () => {
                         className={`
                             inline-flex items-center px-6 py-3 rounded-xl text-sm font-bold transition-all duration-200
                             ${activeTab === 'venues'
-                                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30'
+                                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/30'
                                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                             }
                         `}
@@ -141,7 +141,7 @@ const Venues: React.FC = () => {
                         className={`
                             inline-flex items-center px-6 py-3 rounded-xl text-sm font-bold transition-all duration-200
                             ${activeTab === 'staff'
-                                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30'
+                                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-500/30'
                                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                             }
                         `}
@@ -164,15 +164,15 @@ const Venues: React.FC = () => {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder={`Поиск ${activeTab === 'venues' ? 'заведений' : 'персонала'}...`}
-                        className="w-full pl-14 pr-6 py-4 bg-white border-2 border-slate-200 rounded-2xl focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all text-base shadow-sm hover:shadow-md"
+                        className="w-full pl-14 pr-6 py-4 bg-white border-2 border-slate-200 rounded-2xl focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all text-base shadow-sm hover:shadow-md"
                     />
                 </div>
 
                 {/* Content Area */}
                 {(venuesLoading || adminsLoading) ? (
                     <div className="py-24 text-center">
-                        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-orange-100 mb-6">
-                            <div className="animate-spin rounded-full h-10 w-10 border-4 border-orange-500 border-t-transparent"></div>
+                        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-purple-100 mb-6">
+                            <div className="animate-spin rounded-full h-10 w-10 border-4 border-purple-500 border-t-transparent"></div>
                         </div>
                         <p className="text-slate-600 font-semibold text-lg">Загрузка...</p>
                         <p className="text-slate-500 text-sm mt-2">Пожалуйста, подождите</p>
@@ -194,7 +194,7 @@ const Venues: React.FC = () => {
                                     {paginatedVenues.map((venue) => (
                                         <div
                                             key={venue.id}
-                                            className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200/60 hover:border-orange-300 transform hover:-translate-y-1"
+                                            className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200/60 hover:border-purple-300 transform hover:-translate-y-1"
                                         >
                                             {/* Card Image Section - Left Side Layout */}
                                             <div className="flex flex-col sm:flex-row">
@@ -224,7 +224,7 @@ const Venues: React.FC = () => {
                                                 <div className="flex-1 p-5 flex flex-col">
                                                     {/* Title & Context Menu */}
                                                     <div className="flex items-start justify-between mb-3">
-                                                        <h3 className="text-lg font-bold text-slate-900 line-clamp-1 group-hover:text-orange-600 transition-colors" title={venue.name}>
+                                                        <h3 className="text-lg font-bold text-slate-900 line-clamp-1 group-hover:text-purple-600 transition-colors" title={venue.name}>
                                                             {venue.name}
                                                         </h3>
                                                         <button 
@@ -237,13 +237,13 @@ const Venues: React.FC = () => {
 
                                                     {/* Location Row */}
                                                     <div className="flex items-start gap-2.5 text-slate-600 mb-2.5">
-                                                        <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-orange-500" />
+                                                        <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-purple-500" />
                                                         <p className="text-sm line-clamp-2 leading-relaxed">{venue.address}</p>
                                                     </div>
 
                                                     {/* Manager Row */}
                                                     <div className="flex items-center gap-2.5 text-slate-600 mb-4">
-                                                        <Users className="w-4 h-4 flex-shrink-0 text-orange-500" />
+                                                        <Users className="w-4 h-4 flex-shrink-0 text-purple-500" />
                                                         <p className="text-sm font-medium">{venue.adminName || 'Не назначен'}</p>
                                                     </div>
 
@@ -272,7 +272,7 @@ const Venues: React.FC = () => {
                                                     {/* Action Buttons */}
                                                     <div className="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
                                                         <button
-                                                            className="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
+                                                            className="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-sm font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
                                                             aria-label="Edit venue"
                                                         >
                                                             <Edit2 className="w-4 h-4 mr-1.5" />
@@ -339,7 +339,7 @@ const Venues: React.FC = () => {
                                     <tr key={staffMember.id} className={`hover:bg-orange-50/50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center">
-                                                <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-md">
+                                                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-md">
                                                     <span className="text-base font-bold text-white">
                                                         {staffMember.fullName.charAt(0).toUpperCase()}
                                                     </span>
@@ -354,7 +354,7 @@ const Venues: React.FC = () => {
                                             <span className="text-sm font-medium text-slate-700">{staffMember.venueName || 'Не назначено'}</span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800">
+                                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-800">
                                                 Admin
                                             </span>
                                         </td>
@@ -364,11 +364,11 @@ const Venues: React.FC = () => {
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-end gap-2">
                                                 <button 
-                                                    className="p-2.5 hover:bg-orange-100 rounded-xl transition-colors" 
+                                                    className="p-2.5 hover:bg-purple-100 rounded-xl transition-colors" 
                                                     title="Edit"
                                                     aria-label="Edit admin"
                                                 >
-                                                    <Edit2 className="w-4 h-4 text-orange-600" />
+                                                    <Edit2 className="w-4 h-4 text-purple-600" />
                                                 </button>
                                                 <button 
                                                     className="p-2.5 hover:bg-red-100 rounded-xl transition-colors" 

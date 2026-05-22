@@ -13,15 +13,15 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, sidebarOpen }) => {
 
     return (
         <header className="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
-            {/* Top Bar with Orange Gradient */}
-            <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400">
+            {/* Top Bar with Purple/Blue Gradient - Vendor Admin Theme */}
+            <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         {/* Left: Logo & Menu Toggle */}
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={onMenuToggle}
-                                className="lg:hidden text-white hover:text-orange-100 transition-colors p-2 rounded-lg hover:bg-white/10"
+                                className="lg:hidden text-white hover:text-purple-100 transition-colors p-2 rounded-lg hover:bg-white/10"
                                 aria-label="Toggle menu"
                             >
                                 {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -30,11 +30,11 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, sidebarOpen }) => {
                             {/* Logo */}
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                                    <img src="/logo.png" alt="Eelep Kal" className="w-8 h-8 object-contain" />
+                                    <img src="/logo.png" alt="Ээлеп кал Вендор" className="w-8 h-8 object-contain rounded-lg" />
                                 </div>
                                 <div className="hidden sm:block">
-                                    <h1 className="text-xl font-bold text-white tracking-tight">Ээлеп Кал</h1>
-                                    <p className="text-xs text-orange-100 font-medium">Панель управления</p>
+                                    <h1 className="text-xl font-bold text-white tracking-tight">Ээлеп кал</h1>
+                                    <p className="text-xs text-purple-100 font-medium">Вендор — всё легко</p>
                                 </div>
                             </div>
                         </div>
@@ -47,22 +47,22 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, sidebarOpen }) => {
                                     className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl transition-all border border-white/20"
                                 >
                                     <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                                        <span className="text-sm font-bold text-orange-600">
+                                        <span className="text-sm font-bold text-purple-600">
                                             {user?.email?.charAt(0).toUpperCase() || 'U'}
                                         </span>
                                     </div>
                                     <div className="hidden md:block text-left">
                                         <p className="text-sm font-semibold text-white">{user?.email?.split('@')[0] || 'User'}</p>
-                                        <p className="text-xs text-orange-100">Администратор</p>
+                                        <p className="text-xs text-purple-100">Администратор</p>
                                     </div>
                                 </button>
 
                                 {/* Dropdown Menu */}
                                 {userMenuOpen && (
                                     <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
-                                        <div className="p-4 bg-gradient-to-r from-orange-50 to-white border-b border-slate-200">
+                                        <div className="p-4 bg-gradient-to-r from-purple-50 to-indigo-50 border-b border-slate-200">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center shadow-md">
+                                                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-md">
                                                     <span className="text-lg font-bold text-white">
                                                         {user?.email?.charAt(0).toUpperCase() || 'U'}
                                                     </span>
