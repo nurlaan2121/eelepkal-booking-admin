@@ -5,18 +5,6 @@ import { superAdminApi } from '../../../api/services/superAdminService';
 import type { GetAllVenuesResponse } from '../../../api/dto/superAdminVenueDto';
 import type { AdminInfoResponse } from '../../../api/dto/superAdminDto';
 
-interface Venue {
-    id: number;
-    name: string;
-    address: string;
-    phone: string;
-    rating: number;
-    status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
-    image?: string;
-}
-
-interface Staff extends AdminInfoResponse {}
-
 const Venues: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'venues' | 'staff'>('venues');
     const [searchQuery, setSearchQuery] = useState('');
@@ -278,8 +266,8 @@ const Venues: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
-                                {filteredStaff.map((staff) => (
-                                    <tr key={staff.id} className="hover:bg-slate-50 transition-colors">
+                                {filteredStaff.map((staffMember) => (
+                                    <tr key={staffMember.id} className="hover:bg-slate-50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center">
                                                 <div className="w-10 h-10 bg-gradient-to-br from-accent-100 to-accent-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
