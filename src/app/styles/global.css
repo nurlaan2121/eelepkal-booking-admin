@@ -1,47 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
+  /* ── Основная палитра (Deep Midnight Navy) ──────────────── */
+  --color-brand: #0B1F51;
+  --color-brand-light: #162E69;
+  --color-brand-dark: #05102D;
+  --color-brand-alpha: rgba(11, 31, 81, 0.08);
+  --color-brand-shadow: rgba(11, 31, 81, 0.2);
+
+  /* ── Акценты и Действия (Яркий оранжевый из оригинала для кнопок/фокуса) ── */
   --color-primary: #FF6B35;
   --color-primary-dark: #E55A27;
-  --color-primary-light: #FF8C5A;
   --color-primary-alpha: rgba(255, 107, 53, 0.12);
-  --color-primary-shadow: rgba(255, 107, 53, 0.35);
 
-  --color-accent: #FF9800;
-  --color-accent-shadow: rgba(255, 152, 0, 0.3);
+  /* ── Системные цвета для CRM/Админки ───────────────────── */
+  --color-bg: #F4F6F9;          /* Мягкий серый фон рабочей области */
+  --color-sidebar: #0B1F51;     /* Глубокий синий фон для бокового меню */
+  --color-surface: #FFFFFF;     /* Белые карточки и таблицы */
+  --color-surface-hover: #F8FAFC;
 
-  --color-bg: #F8F9FA;
-  --color-surface: #FFFFFF;
-  --color-surface-2: #F4F5F7;
+  /* ── Типографика ────────────────────────────────────────── */
+  --color-text: #0B1F51;         /* Основные заголовки и важный текст */
+  --color-text-secondary: #475569; /* Текст в таблицах, подписи */
+  --color-text-muted: #94A3B8;     /* Плейсхолдеры, отключенные элементы */
+  --color-text-on-brand: #FFFFFF;  /* Текст поверх сайдбара */
 
-  --color-text: #1A1A2E;
-  --color-text-secondary: #64748B;
-  --color-text-muted: #94A3B8;
+  /* ── Границы и Разделители ──────────────────────────────── */
+  --color-border: #E2E8F0;
+  --color-border-light: #F1F5F9;
 
-  --color-border: #E8EBF0;
-  --color-border-light: #F1F3F6;
+  /* ── Статусы столов и броней ────────────────────────────── */
+  --color-success: #10B981;     /* Подтверждено / Свободный стол */
+  --color-error: #EF4444;       /* Отменено / Ошибка */
+  --color-warning: #F59E0B;     /* В ожидании (Pending) */
+  --color-info: #3B82F6;        /* Гости сидят за столом (Seated) */
 
-  --color-success: #22C55E;
-  --color-error: #EF4444;
-  --color-warning: #F59E0B;
-  --color-star: #FBBF24;
-
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
+  /* ── Скругления (Более строгие для админок) ─────────────── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.16), 0 8px 20px rgba(0, 0, 0, 0.08);
-  --shadow-primary: 0 8px 24px var(--color-primary-shadow);
+  /* ── Тени ───────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(11, 31, 81, 0.04);
+  --shadow-md: 0 4px 12px rgba(11, 31, 81, 0.05), 0 2px 4px rgba(11, 31, 81, 0.03);
+  --shadow-lg: 0 12px 24px rgba(11, 31, 81, 0.08), 0 4px 8px rgba(11, 31, 81, 0.04);
+  --shadow-sidebar: 4px 0 24px rgba(5, 10, 45, 0.15);
 
   --transition-fast: 0.15s ease;
   --transition-base: 0.25s ease;
-  --transition-slow: 0.4s ease;
 }
 
 * {
@@ -53,22 +61,17 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  touch-action: pan-x pan-y;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-bg);
   color: var(--color-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
 }
 
 #root {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
 }
 
 a {
@@ -76,176 +79,180 @@ a {
   color: inherit;
 }
 
-input:focus {
-  border-color: var(--color-primary) !important;
-  box-shadow: 0 0 0 3px var(--color-primary-alpha) !important;
+/* ── Поля ввода (Инпуты формы) ──────────────────────────── */
+input, select, textarea {
+  font-family: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--color-brand);
+  background-color: var(--color-surface);
+  transition: all var(--transition-fast);
 }
 
-/* ── Animations ─────────────────────────────────────────── */
-
-.animate-spin {
-  animation: spin 1s linear infinite;
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-brand) !important;
+  box-shadow: 0 0 0 3px var(--color-brand-alpha) !important;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
+/* ── Элементы Админ-Панели (Сайдбар и Таблицы) ───────────── */
 
-  to {
-    transform: rotate(360deg);
-  }
+/* Компонент бокового меню */
+.admin-sidebar {
+  width: 260px;
+  background-color: var(--color-sidebar);
+  color: var(--color-text-on-brand);
+  box-shadow: var(--shadow-sidebar);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
-.animate-pulse {
-  animation: pulse 1.8s ease-in-out infinite;
+/* Элемент навигации в меню */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  margin: 4px 12px;
+  transition: all var(--transition-fast);
 }
 
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.45;
-  }
+.sidebar-link:hover, .sidebar-link.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-on-brand);
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s ease both;
+.sidebar-link.active {
+  background-color: var(--color-primary); /* Выделение текущей страницы */
+  font-weight: 600;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-up {
-  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ── Card hover ──────────────────────────────────────────── */
-
-.card-hover {
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
-  cursor: pointer;
-}
-
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.card-hover:active {
-  transform: translateY(-1px);
+/* Стили для таблиц CRM (Data Table) */
+.admin-table-container {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border-light);
+  overflow: hidden;
 }
 
-/* ── Buttons ─────────────────────────────────────────────── */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
 
+.admin-table th {
+  background-color: var(--color-border-light);
+  color: var(--color-brand);
+  font-weight: 600;
+  padding: 14px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.admin-table tr:hover td {
+  background-color: var(--color-surface-hover);
+}
+
+/* ── Кнопки (Профессиональный SaaS-вид) ─────────────────── */
+
+/* Главная кнопка действия (Создать бронь, Сохранить) */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 28px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-  color: #FFFFFF;
-  border: none;
-  border-radius: var(--radius-full);
+  padding: 10px 20px;
+  background: var(--color-brand);
+  color: var(--color-text-on-brand);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: var(--shadow-primary);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
-  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px var(--color-primary-shadow);
+  background: var(--color-brand-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-primary:active {
   transform: translateY(0);
-  opacity: 0.9;
 }
 
+/* Второстепенная кнопка (Сбросить фильтр, Отмена) */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 13px 28px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: var(--radius-full);
+  padding: 10px 20px;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: all var(--transition-base);
-  white-space: nowrap;
+  transition: all var(--transition-fast);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.8);
-  transform: translateY(-2px);
+  background: var(--color-surface-hover);
+  border-color: var(--color-text-muted);
+  color: var(--color-brand);
 }
 
-/* ── Skeleton shimmer ────────────────────────────────────── */
+/* ── Статусные бейджи (Status Tags) ─────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+}
 
+.badge-success { background-color: rgba(16, 185, 129, 0.12); color: var(--color-success); }
+.badge-warning { background-color: rgba(245, 158, 11, 0.12); color: var(--color-warning); }
+.badge-danger  { background-color: rgba(239, 68, 108, 0.12); color: var(--color-error); }
+.badge-info    { background-color: rgba(59, 130, 246, 0.12); color: var(--color-info); }
+
+/* ── Скелетон, Скроллбар и Анимации ────────────────────── */
 .skeleton {
-  background: linear-gradient(90deg, #F0F2F5 25%, #E4E7EB 50%, #F0F2F5 75%);
+  background: linear-gradient(90deg, #E2E8F0 25%, #F1F5F9 50%, #E2E8F0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
-
-/* ── Scrollbar ───────────────────────────────────────────── */
 
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -253,63 +260,6 @@ input:focus {
   border-radius: var(--radius-full);
 }
 
-/* ── Section heading ─────────────────────────────────────── */
-
-.section-title {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--color-text);
-  margin: 0;
-  letter-spacing: -0.3px;
-}
-
-/* ── Trust badge row ─────────────────────────────────────── */
-
-.trust-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  background: var(--color-primary-alpha);
-  color: var(--color-primary);
-  border-radius: var(--radius-full);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-/* ── Hide scrollbar utility ──────────────────────────────── */
-
-.hide-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* ── Grid utilities ────────────────────────────────────────── */
-.responsive-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  width: 100%;
-}
-
-@media (max-width: 600px) {
-  .responsive-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-}
-
-/* ── Mobile responsive ───────────────────────────────────── */
-
-@media (max-width: 480px) {
-
-  .btn-primary,
-  .btn-secondary {
-    padding: 12px 20px;
-    font-size: 15px;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
 }
