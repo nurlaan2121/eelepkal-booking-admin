@@ -84,18 +84,20 @@ const AdminLayout: React.FC = () => {
                                     <NavLink
                                         to={item.to}
                                         end={item.to === '/admin'}
-                                        className={({ isActive }) =>
-                                            `flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group ${
-                                                isActive
-                                                    ? 'bg-primary-50 text-primary-700 shadow-sm'
-                                                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                                            }`
-                                        }
+                                        className={({ isActive }) => {
+                                            const bgClass = isActive ? 'bg-primary-50 text-primary-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900';
+                                            
+                                            return `flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group ${bgClass}`;
+                                        }}
                                     >
-                                        <item.icon className={`w-5 h-5 mr-3 transition-colors ${
-                                            isActive ? 'text-primary-600' : 'text-slate-400 group-hover:text-slate-600'
-                                        }`} />
-                                        <span className="font-medium">{item.label}</span>
+                                        {({ isActive }) => (
+                                            <>
+                                                <item.icon className={`w-5 h-5 mr-3 transition-colors ${
+                                                    isActive ? 'text-primary-600' : 'text-slate-400 group-hover:text-slate-600'
+                                                }`} />
+                                                <span className="font-medium">{item.label}</span>
+                                            </>
+                                        )}
                                     </NavLink>
                                 </li>
                             ))}

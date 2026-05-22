@@ -28,13 +28,6 @@ export const StatCard: React.FC<StatCardProps> = ({
         info: 'from-blue-500 to-blue-600 shadow-blue/20',
     };
 
-    const bgColors = {
-        primary: 'bg-primary-50 text-primary-600',
-        success: 'bg-green-50 text-green-600',
-        warning: 'bg-yellow-50 text-yellow-600',
-        info: 'bg-blue-50 text-blue-600',
-    };
-
     return (
         <div className={`bg-white rounded-2xl border border-slate-200 shadow-sm p-6 hover:shadow-md transition-shadow ${className}`}>
             <div className="flex items-start justify-between">
