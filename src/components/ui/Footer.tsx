@@ -13,8 +13,8 @@ const Footer: React.FC = () => {
                         {/* Brand Column */}
                         <div className="lg:col-span-1">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
-                                    <img src="/logo.png" alt="Ээлеп кал Вендор" className="w-8 h-8 object-contain rounded-lg" />
+                                <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+                                    <img src="/logo.png" alt="Ээлеп кал Вендор" className="w-10 h-10 object-contain rounded-lg" />
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold text-slate-900">Ээлеп кал</h3>
