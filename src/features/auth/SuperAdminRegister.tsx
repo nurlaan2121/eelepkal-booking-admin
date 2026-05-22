@@ -131,11 +131,11 @@ const SuperAdminRegister: React.FC = () => {
     const passwordStrength = getPasswordStrength(formData.password);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-purple-50 px-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-orange-50 px-4 py-12">
             <div className="w-full max-w-lg">
                 {/* Logo & Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl mb-4 shadow-lg">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl mb-4 shadow-lg shadow-primary/30">
                         <Shield className="w-8 h-8 text-white" />
                     </div>
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">
@@ -173,7 +173,7 @@ const SuperAdminRegister: React.FC = () => {
                                     w-full px-4 py-3 rounded-xl border-2 outline-none transition-all duration-200
                                     ${errors.fullName && touched.fullName
                                         ? 'border-red-300 bg-red-50 focus:border-red-500'
-                                        : 'border-slate-200 bg-slate-50 focus:border-purple-500 focus:bg-white'
+                                        : 'border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white'
                                     }
                                 `}
                                 placeholder="John Doe"
@@ -200,7 +200,7 @@ const SuperAdminRegister: React.FC = () => {
                                     w-full px-4 py-3 rounded-xl border-2 outline-none transition-all duration-200
                                     ${errors.email && touched.email
                                         ? 'border-red-300 bg-red-50 focus:border-red-500'
-                                        : 'border-slate-200 bg-slate-50 focus:border-purple-500 focus:bg-white'
+                                        : 'border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white'
                                     }
                                 `}
                                 placeholder="admin@eelepkal.com"
@@ -227,7 +227,7 @@ const SuperAdminRegister: React.FC = () => {
                                     w-full px-4 py-3 rounded-xl border-2 outline-none transition-all duration-200
                                     ${errors.phoneNumber && touched.phoneNumber
                                         ? 'border-red-300 bg-red-50 focus:border-red-500'
-                                        : 'border-slate-200 bg-slate-50 focus:border-purple-500 focus:bg-white'
+                                        : 'border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white'
                                     }
                                 `}
                                 placeholder="+996777785445"
@@ -255,7 +255,7 @@ const SuperAdminRegister: React.FC = () => {
                                         w-full px-4 py-3 pr-12 rounded-xl border-2 outline-none transition-all duration-200
                                         ${errors.password && touched.password
                                             ? 'border-red-300 bg-red-50 focus:border-red-500'
-                                            : 'border-slate-200 bg-slate-50 focus:border-purple-500 focus:bg-white'
+                                            : 'border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white'
                                         }
                                     `}
                                     placeholder="••••••••"
@@ -307,7 +307,7 @@ const SuperAdminRegister: React.FC = () => {
                                         w-full px-4 py-3 pr-12 rounded-xl border-2 outline-none transition-all duration-200
                                         ${errors.confirmPassword && touched.confirmPassword
                                             ? 'border-red-300 bg-red-50 focus:border-red-500'
-                                            : 'border-slate-200 bg-slate-50 focus:border-purple-500 focus:bg-white'
+                                            : 'border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white'
                                         }
                                     `}
                                     placeholder="••••••••"
@@ -331,7 +331,7 @@ const SuperAdminRegister: React.FC = () => {
                         <button
                             type="submit"
                             disabled={registerMutation.isPending}
-                            className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-200 flex items-center justify-center group"
+                            className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex items-center justify-center group"
                         >
                             {registerMutation.isPending ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -350,7 +350,7 @@ const SuperAdminRegister: React.FC = () => {
                             Already have an account?{' '}
                             <a
                                 href="/login"
-                                className="font-semibold text-purple-600 hover:text-purple-700 transition-colors"
+                                className="font-semibold text-primary-500 hover:text-primary-600 transition-colors"
                             >
                                 Sign in
                             </a>

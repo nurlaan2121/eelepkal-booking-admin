@@ -100,7 +100,7 @@ const SuperAdminVerifyOtp: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-purple-50 px-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-orange-50 px-4 py-12">
             <div className="w-full max-w-md">
                 {/* Back Button */}
                 <button
@@ -115,8 +115,8 @@ const SuperAdminVerifyOtp: React.FC = () => {
                 <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
                     {/* Icon & Header */}
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl mb-4">
-                            <Mail className="w-8 h-8 text-purple-600" />
+                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl mb-4">
+                            <Mail className="w-8 h-8 text-primary-600" />
                         </div>
                         <h1 className="text-2xl font-bold text-slate-900 mb-2">
                             Verify Your Email
@@ -124,7 +124,7 @@ const SuperAdminVerifyOtp: React.FC = () => {
                         <p className="text-slate-600 text-sm">
                             We sent a 6-digit code to
                         </p>
-                        <p className="text-purple-600 font-semibold mt-1">
+                        <p className="text-primary-600 font-semibold mt-1">
                             {email}
                         </p>
                     </div>
@@ -152,7 +152,7 @@ const SuperAdminVerifyOtp: React.FC = () => {
                     <button
                         onClick={handleVerify}
                         disabled={otp.length !== 6 || verifyMutation.isPending}
-                        className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-200 flex items-center justify-center mb-6"
+                        className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex items-center justify-center mb-6"
                     >
                         {verifyMutation.isPending ? (
                             <Loader2 className="w-5 h-5 animate-spin" />
@@ -169,7 +169,7 @@ const SuperAdminVerifyOtp: React.FC = () => {
                         {resendTimer > 0 ? (
                             <p className="text-sm text-slate-600">
                                 Resend code in{' '}
-                                <span className="font-semibold text-purple-600">
+                                <span className="font-semibold text-primary-500">
                                     {resendTimer}s
                                 </span>
                             </p>
@@ -177,7 +177,7 @@ const SuperAdminVerifyOtp: React.FC = () => {
                             <button
                                 onClick={handleResend}
                                 disabled={isResending}
-                                className="text-sm font-semibold text-purple-600 hover:text-purple-700 transition-colors disabled:opacity-50"
+                                className="text-sm font-semibold text-primary-500 hover:text-primary-600 transition-colors disabled:opacity-50"
                             >
                                 {isResending ? (
                                     <Loader2 className="w-4 h-4 animate-spin inline mr-2" />

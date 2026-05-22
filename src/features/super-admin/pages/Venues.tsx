@@ -118,7 +118,7 @@ const Venues: React.FC = () => {
                     <p className="text-slate-600 mt-1">Manage venues and staff</p>
                 </div>
                 {activeTab === 'staff' && (
-                    <button className="inline-flex items-center px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-purple-200">
+                    <button className="inline-flex items-center px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-primary/30">
                         <Plus className="w-4 h-4 mr-2" />
                         Добавить администратора
                     </button>
@@ -132,14 +132,14 @@ const Venues: React.FC = () => {
                     className={`
                         inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition-all
                         ${activeTab === 'venues'
-                            ? 'bg-purple-600 text-white shadow-md'
+                            ? 'bg-primary-500 text-white shadow-md'
                             : 'text-slate-600 hover:bg-slate-50'
                         }
                     `}
                 >
                     <Building2 className="w-4 h-4 mr-2" />
                     Заведения
-                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${activeTab === 'venues' ? 'bg-purple-700' : 'bg-slate-200'}`}>
+                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${activeTab === 'venues' ? 'bg-primary-600' : 'bg-slate-200'}`}>
                         {mockVenues.length}
                     </span>
                 </button>
@@ -148,14 +148,14 @@ const Venues: React.FC = () => {
                     className={`
                         inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold transition-all
                         ${activeTab === 'staff'
-                            ? 'bg-purple-600 text-white shadow-md'
+                            ? 'bg-primary-500 text-white shadow-md'
                             : 'text-slate-600 hover:bg-slate-50'
                         }
                     `}
                 >
                     <Users className="w-4 h-4 mr-2" />
                     Персонал
-                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${activeTab === 'staff' ? 'bg-purple-700' : 'bg-slate-200'}`}>
+                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${activeTab === 'staff' ? 'bg-primary-600' : 'bg-slate-200'}`}>
                         {mockStaff.length}
                     </span>
                 </button>
@@ -169,7 +169,7 @@ const Venues: React.FC = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={`Search ${activeTab === 'venues' ? 'venues' : 'staff'}...`}
-                    className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-100 outline-none transition-all"
+                    className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                 />
             </div>
 
@@ -206,8 +206,8 @@ const Venues: React.FC = () => {
                                     <tr key={venue.id} className="hover:bg-slate-50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center">
-                                                <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
-                                                    <Building2 className="w-6 h-6 text-purple-600" />
+                                                <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                                    <Building2 className="w-6 h-6 text-primary-600" />
                                                 </div>
                                                 <span className="font-semibold text-slate-900">{venue.name}</span>
                                             </div>
@@ -308,8 +308,8 @@ const Venues: React.FC = () => {
                                     <tr key={staff.id} className="hover:bg-slate-50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center">
-                                                <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                                    <span className="text-sm font-bold text-blue-600">
+                                                <div className="w-10 h-10 bg-gradient-to-br from-accent-100 to-accent-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                                    <span className="text-sm font-bold text-accent-600">
                                                         {staff.fullName.charAt(0).toUpperCase()}
                                                     </span>
                                                 </div>
@@ -323,7 +323,7 @@ const Venues: React.FC = () => {
                                             <span className="text-sm text-slate-700">{staff.venue}</span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
+                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary-100 text-primary-700">
                                                 {staff.role}
                                             </span>
                                         </td>

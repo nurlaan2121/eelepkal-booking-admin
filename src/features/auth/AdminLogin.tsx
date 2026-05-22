@@ -47,11 +47,11 @@ const AdminLogin: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50 px-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-orange-50 px-4 py-12">
             <div className="w-full max-w-md">
                 {/* Logo & Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl mb-4 shadow-lg">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl mb-4 shadow-lg shadow-primary/30">
                         <Shield className="w-8 h-8 text-white" />
                     </div>
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">
@@ -83,7 +83,7 @@ const AdminLogin: React.FC = () => {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-blue-500 focus:bg-white outline-none transition-all duration-200"
+                                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white outline-none transition-all duration-200"
                                 placeholder="admin@eelepkal.com"
                                 required
                                 disabled={loginMutation.isPending}
@@ -101,7 +101,7 @@ const AdminLogin: React.FC = () => {
                                     type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-blue-500 focus:bg-white outline-none transition-all duration-200"
+                                    className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-slate-200 bg-slate-50 focus:border-primary-500 focus:bg-white outline-none transition-all duration-200"
                                     placeholder="••••••••"
                                     required
                                     disabled={loginMutation.isPending}
@@ -121,7 +121,7 @@ const AdminLogin: React.FC = () => {
                         <button
                             type="submit"
                             disabled={loginMutation.isPending}
-                            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-200 flex items-center justify-center"
+                            className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold py-3.5 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex items-center justify-center"
                         >
                             {loginMutation.isPending ? (
                                 <Loader2 className="w-5 h-5 animate-spin" />

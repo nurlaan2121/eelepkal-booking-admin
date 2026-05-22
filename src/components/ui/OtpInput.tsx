@@ -126,7 +126,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
                                 error
                                     ? 'border-red-300 bg-red-50 text-red-900'
                                     : isFocused
-                                    ? 'border-purple-500 bg-white ring-4 ring-purple-100'
+                                    ? 'border-primary-500 bg-white ring-4 ring-primary-100'
                                     : digit
                                     ? 'border-slate-300 bg-white text-slate-900'
                                     : 'border-slate-200 bg-slate-50 text-slate-900'
