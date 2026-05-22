@@ -26,6 +26,9 @@ const SuperAdminCities = React.lazy(() => import('../features/super-admin/pages/
 const SuperAdminModeration = React.lazy(() => import('../features/super-admin/pages/Moderation'));
 const SuperAdminAnalytics = React.lazy(() => import('../features/super-admin/pages/Analytics'));
 const SuperAdminSettings = React.lazy(() => import('../features/super-admin/pages/Settings'));
+const SuperAdminPromo = React.lazy(() => import('../features/super-admin/pages/Promo'));
+const SuperAdminFeedback = React.lazy(() => import('../features/super-admin/pages/Feedback'));
+const SuperAdminPayments = React.lazy(() => import('../features/super-admin/pages/Payments'));
 
 const PageSuspense: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <React.Suspense fallback={
@@ -133,6 +136,18 @@ export const router = createBrowserRouter([
                     {
                         path: 'settings',
                         element: <PageSuspense><SuperAdminSettings /></PageSuspense>,
+                    },
+                    {
+                        path: 'promo',
+                        element: <PageSuspense><SuperAdminPromo /></PageSuspense>,
+                    },
+                    {
+                        path: 'feedback',
+                        element: <PageSuspense><SuperAdminFeedback /></PageSuspense>,
+                    },
+                    {
+                        path: 'payments',
+                        element: <PageSuspense><SuperAdminPayments /></PageSuspense>,
                     },
                 ],
             },

@@ -1,67 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Building2, Users, Search, Plus, Edit2, Trash2, Eye, MapPin, Star, CheckCircle, XCircle, MoreVertical, Image as ImageIcon } from 'lucide-react';
-import { superAdminVenueApi } from '../../../api/services/superAdminVenueService';
-import { superAdminApi } from '../../../api/services/superAdminService';
-import type { GetAllVenuesResponse } from '../../../api/dto/superAdminVenueDto';
-import type { AdminInfoResponse } from '../../../api/dto/superAdminDto';
-
-interface VenueWithDetails extends GetAllVenuesResponse {
-    averagePrice?: number;
-    adminName?: string;
-}
+import { useVenues } from '../../../hooks/useVenues';
+import { useAdmins } from '../../../hooks/useAdmins';
+import Pagination from '../../../components/ui/Pagination';
 
 const Venues: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'venues' | 'staff'>('venues');
     const [searchQuery, setSearchQuery] = useState('');
-    const [venues, setVenues] = useState<VenueWithDetails[]>([]);
-    const [staff, setStaff] = useState<AdminInfoResponse[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 12;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const [venuesResponse, staffResponse] = await Promise.all([
-                    superAdminVenueApi.getAllVenues(),
-                    superAdminApi.getMyPersonal(),
-                ]);
-
-                // Fetch details for each venue to get averagePrice and admin info
-                const venuesWithDetails = await Promise.all(
-                    venuesResponse.data.map(async (venue) => {
-                        try {
-                            const [detailsResponse, adminResponse] = await Promise.all([
-                                superAdminVenueApi.getDetails(venue.id),
-                                superAdminVenueApi.getPublicAdmin(venue.id),
-                            ]);
-
-                            return {
-                                ...venue,
-                                averagePrice: detailsResponse.data.averagePrice,
-                                adminName: adminResponse.data.adminName || 'Не назначен',
-                            };
-                        } catch (error) {
-                            console.error(`Failed to fetch details for venue ${venue.id}:`, error);
-                            return {
-                                ...venue,
-                                averagePrice: 0,
-                                adminName: 'Не назначен',
-                            };
-                        }
-                    })
-                );
-
-                setVenues(venuesWithDetails);
-                setStaff(staffResponse.data);
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
+    // Use custom hooks
+    const { venues, loading: venuesLoading } = useVenues();
+    const { admins, loading: adminsLoading, deleteAdmin } = useAdmins();
 
     const getStatusBadge = (status: string) => {
         const styles = {
@@ -110,11 +61,34 @@ const Venues: React.FC = () => {
         venue.address.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const filteredStaff = staff.filter((staffMember) =>
+    const filteredStaff = admins.filter((staffMember) =>
         staffMember.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         staffMember.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (staffMember.venueName || '').toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    // Pagination
+    const totalVenuesPages = Math.ceil(filteredVenues.length / itemsPerPage);
+    const totalStaffPages = Math.ceil(filteredStaff.length / itemsPerPage);
+    const paginatedVenues = filteredVenues.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+    const paginatedStaff = filteredStaff.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleDeleteAdmin = async (adminId: number) => {
+        if (window.confirm('Are you sure you want to delete this admin?')) {
+            await deleteAdmin(adminId);
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -168,7 +142,7 @@ const Venues: React.FC = () => {
                     <Users className="w-4 h-4 mr-2" />
                     Персонал
                     <span className={`ml-2 px-2.5 py-0.5 rounded-full text-xs ${activeTab === 'staff' ? 'bg-orange-600' : 'bg-slate-200'}`}>
-                        {staff.length}
+                        {admins.length}
                     </span>
                 </button>
             </div>
@@ -186,7 +160,7 @@ const Venues: React.FC = () => {
             </div>
 
             {/* Content */}
-            {loading ? (
+            {(venuesLoading || adminsLoading) ? (
                 <div className="py-16 text-center">
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
                     <p className="text-slate-600 font-medium mt-4">Loading...</p>
@@ -201,106 +175,117 @@ const Venues: React.FC = () => {
                             <p className="text-slate-500 text-sm mt-1">Try adjusting your search</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            {filteredVenues.map((venue) => (
-                                <div
-                                    key={venue.id}
-                                    className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-                                >
-                                    {/* Card Header with Image */}
-                                    <div className="relative">
-                                        <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
-                                            {venue.imageUrl ? (
-                                                <img
-                                                    src={venue.imageUrl}
-                                                    alt={venue.name}
-                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center">
-                                                    <ImageIcon className="w-16 h-16 text-slate-400" />
+                        <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {paginatedVenues.map((venue) => (
+                                    <div
+                                        key={venue.id}
+                                        className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
+                                    >
+                                        {/* Card Header with Image */}
+                                        <div className="relative">
+                                            <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
+                                                {venue.imageUrl ? (
+                                                    <img
+                                                        src={venue.imageUrl}
+                                                        alt={venue.name}
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center">
+                                                        <ImageIcon className="w-16 h-16 text-slate-400" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            
+                                            {/* Status Badge */}
+                                            <div className="absolute top-3 left-3">
+                                                {getStatusBadge(venue.status)}
+                                            </div>
+
+                                            {/* Context Menu */}
+                                            <button className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-lg hover:bg-white transition-colors shadow-sm">
+                                                <MoreVertical className="w-4 h-4 text-slate-600" />
+                                            </button>
+                                        </div>
+
+                                        {/* Card Content */}
+                                        <div className="p-5 space-y-4">
+                                            {/* Title */}
+                                            <h3 className="text-lg font-bold text-slate-900 line-clamp-1" title={venue.name}>
+                                                {venue.name}
+                                            </h3>
+
+                                            {/* Location */}
+                                            <div className="flex items-start gap-2 text-slate-600">
+                                                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-orange-500" />
+                                                <p className="text-sm line-clamp-2">{venue.address}</p>
+                                            </div>
+
+                                            {/* Manager */}
+                                            <div className="flex items-center gap-2 text-slate-600">
+                                                <Users className="w-4 h-4 flex-shrink-0 text-orange-500" />
+                                                <p className="text-sm">{venue.adminName}</p>
+                                            </div>
+
+                                            {/* Divider */}
+                                            <div className="border-t border-slate-200" />
+
+                                            {/* Bottom Info */}
+                                            <div className="flex items-center justify-between">
+                                                {/* Average Price */}
+                                                <div>
+                                                    <p className="text-xs text-slate-500 mb-0.5">Средний чек:</p>
+                                                    <p className="text-sm font-bold text-slate-900">
+                                                        {venue.averagePrice && venue.averagePrice > 0
+                                                            ? `${venue.averagePrice} сом`
+                                                            : '—'}
+                                                    </p>
                                                 </div>
-                                            )}
-                                        </div>
-                                        
-                                        {/* Status Badge */}
-                                        <div className="absolute top-3 left-3">
-                                            {getStatusBadge(venue.status)}
-                                        </div>
 
-                                        {/* Context Menu */}
-                                        <button className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-lg hover:bg-white transition-colors shadow-sm">
-                                            <MoreVertical className="w-4 h-4 text-slate-600" />
-                                        </button>
-                                    </div>
-
-                                    {/* Card Content */}
-                                    <div className="p-5 space-y-4">
-                                        {/* Title */}
-                                        <h3 className="text-lg font-bold text-slate-900 line-clamp-1" title={venue.name}>
-                                            {venue.name}
-                                        </h3>
-
-                                        {/* Location */}
-                                        <div className="flex items-start gap-2 text-slate-600">
-                                            <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-orange-500" />
-                                            <p className="text-sm line-clamp-2">{venue.address}</p>
-                                        </div>
-
-                                        {/* Manager */}
-                                        <div className="flex items-center gap-2 text-slate-600">
-                                            <Users className="w-4 h-4 flex-shrink-0 text-orange-500" />
-                                            <p className="text-sm">{venue.adminName}</p>
-                                        </div>
-
-                                        {/* Divider */}
-                                        <div className="border-t border-slate-200" />
-
-                                        {/* Bottom Info */}
-                                        <div className="flex items-center justify-between">
-                                            {/* Average Price */}
-                                            <div>
-                                                <p className="text-xs text-slate-500 mb-0.5">Средний чек:</p>
-                                                <p className="text-sm font-bold text-slate-900">
-                                                    {venue.averagePrice && venue.averagePrice > 0
-                                                        ? `${venue.averagePrice} сом`
-                                                        : '—'}
-                                                </p>
+                                                {/* Rating */}
+                                                <div className="text-right">
+                                                    <p className="text-xs text-slate-500 mb-0.5">Рейтинг:</p>
+                                                    <StarRating rating={venue.rating} />
+                                                </div>
                                             </div>
 
-                                            {/* Rating */}
-                                            <div className="text-right">
-                                                <p className="text-xs text-slate-500 mb-0.5">Рейтинг:</p>
-                                                <StarRating rating={venue.rating} />
+                                            {/* Action Buttons */}
+                                            <div className="flex items-center gap-2 pt-2">
+                                                <button
+                                                    className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
+                                                    title="Edit"
+                                                >
+                                                    <Edit2 className="w-4 h-4 mr-1.5" />
+                                                    Изменить
+                                                </button>
+                                                <button
+                                                    className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                                                    title="View"
+                                                >
+                                                    <Eye className="w-4 h-4 text-slate-600" />
+                                                </button>
+                                                <button
+                                                    className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 className="w-4 h-4 text-red-600" />
+                                                </button>
                                             </div>
                                         </div>
-
-                                        {/* Action Buttons */}
-                                        <div className="flex items-center gap-2 pt-2">
-                                            <button
-                                                className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
-                                                title="Edit"
-                                            >
-                                                <Edit2 className="w-4 h-4 mr-1.5" />
-                                                Изменить
-                                            </button>
-                                            <button
-                                                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
-                                                title="View"
-                                            >
-                                                <Eye className="w-4 h-4 text-slate-600" />
-                                            </button>
-                                            <button
-                                                className="p-2 hover:bg-red-50 rounded-lg transition-colors"
-                                                title="Delete"
-                                            >
-                                                <Trash2 className="w-4 h-4 text-red-600" />
-                                            </button>
-                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                            
+                            {/* Pagination */}
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalVenuesPages}
+                                totalItems={filteredVenues.length}
+                                itemsPerPage={itemsPerPage}
+                                onPageChange={handlePageChange}
+                            />
+                        </>
                     )}
                 </>
             ) : (
@@ -328,7 +313,7 @@ const Venues: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
-                                {filteredStaff.map((staffMember) => (
+                                {paginatedStaff.map((staffMember) => (
                                     <tr key={staffMember.id} className="hover:bg-slate-50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center">
@@ -359,7 +344,11 @@ const Venues: React.FC = () => {
                                                 <button className="p-2 hover:bg-orange-50 rounded-lg transition-colors" title="Edit">
                                                     <Edit2 className="w-4 h-4 text-orange-600" />
                                                 </button>
-                                                <button className="p-2 hover:bg-red-50 rounded-lg transition-colors" title="Block">
+                                                <button 
+                                                    className="p-2 hover:bg-red-50 rounded-lg transition-colors" 
+                                                    title="Delete"
+                                                    onClick={() => handleDeleteAdmin(staffMember.id)}
+                                                >
                                                     <Trash2 className="w-4 h-4 text-red-600" />
                                                 </button>
                                             </div>
@@ -380,22 +369,13 @@ const Venues: React.FC = () => {
                     )}
 
                     {/* Pagination */}
-                    {filteredStaff.length > 0 && (
-                        <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
-                            <p className="text-sm text-slate-600">
-                                Showing <span className="font-semibold">{filteredStaff.length}</span> of{' '}
-                                <span className="font-semibold">{staff.length}</span> staff members
-                            </p>
-                            <div className="flex items-center gap-2">
-                                <button className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors text-sm font-medium disabled:opacity-50" disabled>
-                                    Previous
-                                </button>
-                                <button className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors text-sm font-medium">
-                                    Next
-                                </button>
-                            </div>
-                        </div>
-                    )}
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalStaffPages}
+                        totalItems={filteredStaff.length}
+                        itemsPerPage={itemsPerPage}
+                        onPageChange={handlePageChange}
+                    />
                 </div>
             )}
         </div>
