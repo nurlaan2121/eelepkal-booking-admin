@@ -100,7 +100,7 @@ const Venues: React.FC = () => {
                             <h1 className="text-3xl font-bold text-white tracking-tight">
                                 Мои заведения
                             </h1>
-                            <p className="text-white/80 mt-1 text-sm font-medium">
+                            <p className="text-orange-100 mt-1 text-sm font-medium">
                                 Управляйте вашими заведениями и персоналом
                             </p>
                         </div>

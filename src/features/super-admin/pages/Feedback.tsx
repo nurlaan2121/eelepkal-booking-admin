@@ -64,7 +64,7 @@ const Feedback: React.FC = () => {
                         className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all text-left"
                     >
                         <div className="flex items-start justify-between mb-4">
-                            <Building2 className="w-8 h-8 text-primary-500" />
+                            <Building2 className="w-8 h-8 text-orange-500" />
                             <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                                 venue.status === 'ACTIVE' 
                                     ? 'bg-green-100 text-green-700' 
@@ -76,7 +76,7 @@ const Feedback: React.FC = () => {
                         <h3 className="text-lg font-bold text-slate-900 mb-2">{venue.name}</h3>
                         <p className="text-sm text-slate-600 mb-3">{venue.address}</p>
                         <div className="flex items-center gap-2 text-sm text-slate-600">
-                            <Star className="w-4 h-4 fill-primary-500 text-primary-500" />
+                            <Star className="w-4 h-4 fill-orange-500 text-orange-500" />
                             <span className="font-semibold">{venue.rating}</span>
                             <span>•</span>
                             <MessageSquare className="w-4 h-4" />
@@ -96,13 +96,13 @@ const Feedback: React.FC = () => {
                 <div className="space-y-4">
                     {loading ? (
                         <div className="py-8 text-center">
-                            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
-                            <p className="text-slate-600 mt-2">Загрузка отзывов...</p>
+                            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+                            <p className="text-slate-600 mt-2">Loading feedbacks...</p>
                         </div>
                     ) : feedbacks.length === 0 ? (
                         <div className="py-8 text-center">
                             <MessageSquare className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                            <p className="text-slate-600">Пока нет отзывов</p>
+                            <p className="text-slate-600">No feedback yet</p>
                         </div>
                     ) : (
                         <>
@@ -131,7 +131,7 @@ const Feedback: React.FC = () => {
                                                 key={i}
                                                 className={`w-4 h-4 ${
                                                     i < feedback.rating
-                                                        ? 'fill-primary-500 text-primary-500'
+                                                        ? 'fill-orange-500 text-orange-500'
                                                         : 'text-slate-300'
                                                 }`}
                                             />

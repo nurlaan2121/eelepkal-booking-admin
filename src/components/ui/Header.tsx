@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, sidebarOpen }) => {
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={onMenuToggle}
-                                className="lg:hidden text-white hover:text-white/80 transition-colors p-2 rounded-lg hover:bg-white/10"
+                                className="lg:hidden text-white hover:text-primary-100 transition-colors p-2 rounded-lg hover:bg-white/10"
                                 aria-label="Toggle menu"
                             >
                                 {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuToggle, sidebarOpen }) => {
                                     </div>
                                     <div className="hidden md:block text-left">
                                         <p className="text-sm font-semibold text-white">{user?.email?.split('@')[0] || 'User'}</p>
-                                        <p className="text-xs text-white/80">Администратор</p>
+                                        <p className="text-xs text-primary-100">Администратор</p>
                                     </div>
                                 </button>
 
