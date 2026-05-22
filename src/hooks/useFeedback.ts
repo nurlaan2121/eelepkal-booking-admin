@@ -4,10 +4,10 @@
 // =====================================================
 
 import { useState, useCallback } from 'react';
-import { superAdminFeedbackApi } from '../../api/services/superAdminFeedbackService';
-import { superAdminVenueApi } from '../../api/services/superAdminVenueService';
-import type { VenueFeedbackResponse } from '../../api/dto/superAdminVenueDto';
-import useToastStore from '../../store/useToastStore';
+import { superAdminFeedbackApi } from '../api/services/superAdminFeedbackService';
+import { superAdminVenueApi } from '../api/services/superAdminVenueService';
+import type { VenueFeedbackResponse } from '../api/dto/superAdminVenueDto';
+import { useToastStore } from '../store/useToastStore';
 
 interface UseFeedbackReturn {
     feedbacks: VenueFeedbackResponse[];
@@ -21,7 +21,7 @@ export const useFeedback = (): UseFeedbackReturn => {
     const [feedbacks, setFeedbacks] = useState<VenueFeedbackResponse[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const showToast = useToastStore((state) => state.showToast);
+    const addToast = useToastStore((state) => state.addToast);
 
     const fetchFeedbacks = useCallback(async (venueId: number) => {
         try {
@@ -42,17 +42,17 @@ export const useFeedback = (): UseFeedbackReturn => {
     const deleteFeedback = useCallback(async (venueId: number, feedbackId: number): Promise<boolean> => {
         try {
             await superAdminFeedbackApi.deleteFeedback(venueId, feedbackId);
-            showToast('success', 'Feedback deleted successfully');
+            addToast('Feedback deleted successfully', 'success');
             
             // Remove from local state
             setFeedbacks((prev) => prev.filter((f) => f.id !== feedbackId));
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to delete feedback';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [showToast]);
+    }, [addToast]);
 
     return {
         feedbacks,

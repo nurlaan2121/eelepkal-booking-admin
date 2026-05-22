@@ -4,8 +4,8 @@
 // =====================================================
 
 import { useState, useEffect, useCallback } from 'react';
-import { superAdminVenueApi } from '../../api/services/superAdminVenueService';
-import type { GetAllVenuesResponse, GetVenueDetailsResponse, GetPublicAdminResponse } from '../../api/dto/superAdminVenueDto';
+import { superAdminVenueApi } from '../api/services/superAdminVenueService';
+import type { GetAllVenuesResponse, GetVenueDetailsResponse, GetPublicAdminResponse } from '../api/dto/superAdminVenueDto';
 
 interface VenueWithDetails extends GetAllVenuesResponse {
     averagePrice?: number;

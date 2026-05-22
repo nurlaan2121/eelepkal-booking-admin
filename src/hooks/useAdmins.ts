@@ -4,9 +4,9 @@
 // =====================================================
 
 import { useState, useEffect, useCallback } from 'react';
-import { superAdminApi } from '../../api/services/superAdminService';
-import type { AdminInfoResponse, AdminForReplaceResponse, AddNewPersonalRequest, UpdatePersonalRequest } from '../../api/dto/superAdminDto';
-import useToastStore from '../../store/useToastStore';
+import { superAdminApi } from '../api/services/superAdminService';
+import type { AdminInfoResponse, AdminForReplaceResponse, AddNewPersonalRequest, UpdatePersonalRequest } from '../api/dto/superAdminDto';
+import { useToastStore } from '../store/useToastStore';
 
 interface UseAdminsReturn {
     admins: AdminInfoResponse[];
@@ -26,7 +26,7 @@ export const useAdmins = (): UseAdminsReturn => {
     const [adminsForReplace, setAdminsForReplace] = useState<AdminForReplaceResponse[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const showToast = useToastStore((state) => state.showToast);
+    const addToast = useToastStore((state) => state.addToast);
 
     const fetchData = useCallback(async () => {
         try {
@@ -52,66 +52,66 @@ export const useAdmins = (): UseAdminsReturn => {
     const addAdmin = useCallback(async (data: AddNewPersonalRequest): Promise<boolean> => {
         try {
             await superAdminApi.addPersonalEmail(data);
-            showToast('success', 'OTP sent to admin email');
+            addToast('OTP sent to admin email', 'success');
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to add admin';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [showToast]);
+    }, [addToast]);
 
     const verifyAdminOtp = useCallback(async (email: string, otp: string): Promise<boolean> => {
         try {
             await superAdminApi.addPersonalVerifyEmail({ email, otp });
-            showToast('success', 'Admin verified successfully');
+            addToast('Admin verified successfully', 'success');
             await fetchData();
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Invalid OTP';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [fetchData, showToast]);
+    }, [fetchData, addToast]);
 
     const updateAdmin = useCallback(async (adminId: number, data: UpdatePersonalRequest): Promise<boolean> => {
         try {
             await superAdminApi.updatePersonal(adminId, data);
-            showToast('success', 'Admin updated successfully');
+            addToast('Admin updated successfully', 'success');
             await fetchData();
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to update admin';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [fetchData, showToast]);
+    }, [fetchData, addToast]);
 
     const deleteAdmin = useCallback(async (adminId: number): Promise<boolean> => {
         try {
             await superAdminApi.deletePersonal(adminId);
-            showToast('success', 'Admin deleted successfully');
+            addToast('Admin deleted successfully', 'success');
             await fetchData();
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to delete admin';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [fetchData, showToast]);
+    }, [fetchData, addToast]);
 
     const replaceAdmin = useCallback(async (venueId: number, newAdminId: number): Promise<boolean> => {
         try {
             await superAdminApi.replaceAdmin(venueId, newAdminId);
-            showToast('success', 'Admin replaced successfully');
+            addToast('Admin replaced successfully', 'success');
             await fetchData();
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to replace admin';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [fetchData, showToast]);
+    }, [fetchData, addToast]);
 
     useEffect(() => {
         fetchData();

@@ -4,9 +4,9 @@
 // =====================================================
 
 import { useState, useCallback } from 'react';
-import { superAdminPaymentApi } from '../../api/services/superAdminPaymentService';
-import type { PaymentDetailRequest, PaymentDetailResponse } from '../../api/dto/superAdminPaymentDto';
-import useToastStore from '../../store/useToastStore';
+import { superAdminPaymentApi } from '../api/services/superAdminPaymentService';
+import type { PaymentDetailRequest, PaymentDetailResponse } from '../api/dto/superAdminPaymentDto';
+import { useToastStore } from '../store/useToastStore';
 
 interface UsePaymentReturn {
     payments: PaymentDetailResponse[];
@@ -22,7 +22,7 @@ export const usePayment = (): UsePaymentReturn => {
     const [payments, setPayments] = useState<PaymentDetailResponse[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const showToast = useToastStore((state) => state.showToast);
+    const addToast = useToastStore((state) => state.addToast);
 
     const fetchPayments = useCallback(async (venueId: number) => {
         try {
@@ -43,28 +43,28 @@ export const usePayment = (): UsePaymentReturn => {
     const addPayment = useCallback(async (venueId: number, data: PaymentDetailRequest): Promise<boolean> => {
         try {
             await superAdminPaymentApi.addPaymentDetail(venueId, data);
-            showToast('success', 'Payment method added successfully');
+            addToast('Payment method added successfully', 'success');
             await fetchPayments(venueId);
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to add payment method';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [fetchPayments, showToast]);
+    }, [fetchPayments, addToast]);
 
     const updatePayment = useCallback(async (paymentId: number, data: PaymentDetailRequest): Promise<boolean> => {
         try {
             await superAdminPaymentApi.updatePaymentDetail(paymentId, data);
-            showToast('success', 'Payment method updated successfully');
+            addToast('Payment method updated successfully', 'success');
             await fetchPayments(data.venueId);
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to update payment method';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [fetchPayments, showToast]);
+    }, [fetchPayments, addToast]);
 
     const deletePayment = useCallback(async (paymentId: number): Promise<boolean> => {
         try {
@@ -72,7 +72,7 @@ export const usePayment = (): UsePaymentReturn => {
             const venueId = payments.find((p) => p.id === paymentId)?.venueId;
             
             await superAdminPaymentApi.deletePaymentDetail(paymentId);
-            showToast('success', 'Payment method deleted successfully');
+            addToast('Payment method deleted successfully', 'success');
             
             if (venueId) {
                 await fetchPayments(venueId);
@@ -80,10 +80,10 @@ export const usePayment = (): UsePaymentReturn => {
             return true;
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || 'Failed to delete payment method';
-            showToast('error', errorMessage);
+            addToast(errorMessage, 'error');
             return false;
         }
-    }, [payments, fetchPayments, showToast]);
+    }, [payments, fetchPayments, addToast]);
 
     return {
         payments,
