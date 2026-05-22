@@ -18,15 +18,15 @@ const SuperAdminLayout: React.FC = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const navItems = [
-        { to: '/super-admin', icon: LayoutDashboard, label: 'Dashboard' },
-        { to: '/super-admin/venues', icon: Building2, label: 'Venues' },
-        { to: '/super-admin/admins', icon: UserCog, label: 'Admins' },
-        { to: '/super-admin/users', icon: Users, label: 'Users' },
-        { to: '/super-admin/categories', icon: FolderOpen, label: 'Categories' },
-        { to: '/super-admin/cities', icon: MapPin, label: 'Cities' },
-        { to: '/super-admin/moderation', icon: ShieldCheck, label: 'Moderation' },
-        { to: '/super-admin/analytics', icon: BarChart3, label: 'Analytics' },
-        { to: '/super-admin/settings', icon: Settings, label: 'Settings' },
+        { to: '/super-admin', icon: LayoutDashboard, label: 'Главная' },
+        { to: '/super-admin/venues', icon: Building2, label: 'Заведения' },
+        { to: '/super-admin/admins', icon: UserCog, label: 'Администраторы' },
+        { to: '/super-admin/users', icon: Users, label: 'Пользователи' },
+        { to: '/super-admin/categories', icon: FolderOpen, label: 'Категории' },
+        { to: '/super-admin/cities', icon: MapPin, label: 'Города' },
+        { to: '/super-admin/moderation', icon: ShieldCheck, label: 'Модерация' },
+        { to: '/super-admin/analytics', icon: BarChart3, label: 'Аналитика' },
+        { to: '/super-admin/settings', icon: Settings, label: 'Настройки' },
     ];
 
     return (

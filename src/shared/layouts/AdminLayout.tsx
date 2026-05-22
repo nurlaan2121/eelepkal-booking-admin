@@ -16,13 +16,13 @@ const AdminLayout: React.FC = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const navItems = [
-        { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-        { to: '/admin/reservations', icon: Calendar, label: 'Reservations' },
-        { to: '/admin/menu', icon: UtensilsCrossed, label: 'Menu' },
-        { to: '/admin/tables', icon: Table2, label: 'Tables' },
-        { to: '/admin/staff', icon: Users, label: 'Staff' },
-        { to: '/admin/reviews', icon: MessageSquare, label: 'Reviews' },
-        { to: '/admin/settings', icon: Settings, label: 'Settings' },
+        { to: '/admin', icon: LayoutDashboard, label: 'Главная' },
+        { to: '/admin/reservations', icon: Calendar, label: 'Бронирования' },
+        { to: '/admin/menu', icon: UtensilsCrossed, label: 'Меню' },
+        { to: '/admin/tables', icon: Table2, label: 'Столики' },
+        { to: '/admin/staff', icon: Users, label: 'Персонал' },
+        { to: '/admin/reviews', icon: MessageSquare, label: 'Отзывы' },
+        { to: '/admin/settings', icon: Settings, label: 'Настройки' },
     ];
 
     return (
