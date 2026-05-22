@@ -110,7 +110,7 @@ const Payments: React.FC = () => {
                         className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all text-left"
                     >
                         <div className="flex items-start justify-between mb-4">
-                            <CreditCard className="w-8 h-8 text-orange-500" />
+                            <CreditCard className="w-8 h-8 text-primary-500" />
                             <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                                 venue.status === 'ACTIVE' 
                                     ? 'bg-green-100 text-green-700' 
@@ -121,9 +121,9 @@ const Payments: React.FC = () => {
                         </div>
                         <h3 className="text-lg font-bold text-slate-900 mb-2">{venue.name}</h3>
                         <p className="text-sm text-slate-600 mb-3">{venue.address}</p>
-                        <div className="flex items-center gap-2 text-sm text-orange-600 font-semibold">
+                        <div className="flex items-center gap-2 text-sm text-primary-600 font-semibold">
                             <Building2 className="w-4 h-4" />
-                            <span>Manage Payments</span>
+                            <span>Управление платежами</span>
                         </div>
                     </button>
                 ))}
@@ -142,10 +142,10 @@ const Payments: React.FC = () => {
                                 setIsEditMode(false);
                                 resetForm();
                             }}
-                            className="w-full inline-flex items-center justify-center px-4 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors"
+                            className="w-full inline-flex items-center justify-center px-4 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-colors"
                         >
                             <Plus className="w-5 h-5 mr-2" />
-                            Add Payment Method
+                            Добавить способ оплаты
                         </button>
                     )
                 }
@@ -153,35 +153,35 @@ const Payments: React.FC = () => {
                 <div className="space-y-4">
                     {/* Add/Edit Form */}
                     {isEditMode && (
-                        <div className="p-4 bg-orange-50 rounded-xl border-2 border-orange-200 space-y-4">
+                        <div className="p-4 bg-primary-50 rounded-xl border-2 border-primary-200 space-y-4">
                             <h3 className="font-bold text-slate-900">
-                                {editingPaymentId ? 'Edit Payment Method' : 'Add Payment Method'}
+                                {editingPaymentId ? 'Редактировать способ оплаты' : 'Добавить способ оплаты'}
                             </h3>
 
                             <div>
                                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Payment Type <span className="text-red-500">*</span>
+                                    Способ оплаты <span className="text-red-500">*</span>
                                 </label>
                                 <select
                                     value={paymentType}
                                     onChange={(e) => setPaymentType(e.target.value)}
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                                 >
-                                    <option value="CASH">Cash</option>
-                                    <option value="CARD">Card</option>
-                                    <option value="QR">QR Code</option>
-                                    <option value="TRANSFER">Bank Transfer</option>
+                                    <option value="CASH">Наличные</option>
+                                    <option value="CARD">Карта</option>
+                                    <option value="QR">QR код</option>
+                                    <option value="TRANSFER">Банковский перевод</option>
                                 </select>
                             </div>
 
                             <div>
                                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Details <span className="text-red-500">*</span>
+                                    Подробности <span className="text-red-500">*</span>
                                 </label>
                                 <textarea
                                     value={paymentDetails}
                                     onChange={(e) => setPaymentDetails(e.target.value)}
-                                    placeholder="Payment details, account info, etc."
+                                    placeholder="Подробности оплаты, информация о счете и т.д."
                                     rows={3}
                                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all resize-none"
                                 />
@@ -193,10 +193,10 @@ const Payments: React.FC = () => {
                                     id="isActive"
                                     checked={isActive}
                                     onChange={(e) => setIsActive(e.target.checked)}
-                                    className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500"
+                                    className="w-5 h-5 text-primary-500 rounded focus:ring-primary-500"
                                 />
                                 <label htmlFor="isActive" className="text-sm font-semibold text-slate-700">
-                                    Active
+                                    Активный
                                 </label>
                             </div>
 
@@ -208,14 +208,14 @@ const Payments: React.FC = () => {
                                     }}
                                     className="flex-1 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors font-medium"
                                 >
-                                    Cancel
+                                    Отмена
                                 </button>
                                 <button
                                     onClick={editingPaymentId ? handleUpdatePayment : handleAddPayment}
                                     disabled={loading}
-                                    className="flex-1 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors font-medium disabled:opacity-50"
+                                    className="flex-1 px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors font-medium disabled:opacity-50"
                                 >
-                                    {loading ? 'Saving...' : editingPaymentId ? 'Update' : 'Add'}
+                                    {loading ? 'Сохранение...' : editingPaymentId ? 'Обновить' : 'Добавить'}
                                 </button>
                             </div>
                         </div>
@@ -224,19 +224,19 @@ const Payments: React.FC = () => {
                     {/* Payment Methods List */}
                     {loading ? (
                         <div className="py-8 text-center">
-                            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-                            <p className="text-slate-600 mt-2">Loading payment methods...</p>
+                            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+                            <p className="text-slate-600 mt-2">Загрузка способов оплаты...</p>
                         </div>
                     ) : payments.length === 0 ? (
                         <div className="py-8 text-center">
                             <CreditCard className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                            <p className="text-slate-600">No payment methods configured</p>
+                            <p className="text-slate-600">Способы оплаты не настроены</p>
                             <button
                                 onClick={() => setIsEditMode(true)}
-                                className="mt-3 inline-flex items-center px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors font-medium"
+                                className="mt-3 inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors font-medium"
                             >
                                 <Plus className="w-4 h-4 mr-2" />
-                                Add First Payment Method
+                                Добавить первый способ оплаты
                             </button>
                         </div>
                     ) : (
@@ -247,7 +247,7 @@ const Payments: React.FC = () => {
                             >
                                 <div className="flex items-start justify-between mb-3">
                                     <div className="flex items-center gap-3">
-                                        <CreditCard className="w-6 h-6 text-orange-500" />
+                                        <CreditCard className="w-6 h-6 text-primary-500" />
                                         <div>
                                             <p className="font-semibold text-slate-900">{payment.paymentType}</p>
                                             <p className="text-sm text-slate-600">{payment.paymentDetails}</p>
@@ -263,10 +263,10 @@ const Payments: React.FC = () => {
                                 <div className="flex items-center gap-2 pt-3 border-t border-slate-200">
                                     <button
                                         onClick={() => handleEditClick(payment)}
-                                        className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors"
+                                        className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm font-semibold rounded-lg transition-colors"
                                     >
                                         <Edit2 className="w-4 h-4 mr-1.5" />
-                                        Edit
+                                        Редактировать
                                     </button>
                                     <button
                                         onClick={() => handleDeletePayment(payment.id)}

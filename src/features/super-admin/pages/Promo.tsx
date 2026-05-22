@@ -81,10 +81,10 @@ const Promo: React.FC = () => {
                 </div>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="inline-flex items-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-orange-500/30"
+                    className="inline-flex items-center px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-primary/30"
                 >
                     <Plus className="w-5 h-5 mr-2" />
-                    Create Promo
+                    Создать акцию
                 </button>
             </div>
 
@@ -95,10 +95,10 @@ const Promo: React.FC = () => {
                 <p className="text-slate-600 mb-6">Create your first promotion to attract more customers</p>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="inline-flex items-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors"
+                    className="inline-flex items-center px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-colors"
                 >
                     <Plus className="w-5 h-5 mr-2" />
-                    Create First Promo
+                    Создать первую акцию
                 </button>
             </div>
 
@@ -119,9 +119,9 @@ const Promo: React.FC = () => {
                         <button
                             onClick={handleSubmit}
                             disabled={loading}
-                            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors font-medium disabled:opacity-50"
+                            className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors font-medium disabled:opacity-50"
                         >
-                            {loading ? 'Creating...' : 'Create Promo'}
+                            {loading ? 'Создание...' : 'Создать акцию'}
                         </button>
                     </div>
                 }
@@ -133,39 +133,39 @@ const Promo: React.FC = () => {
                             onClick={() => setPromoMode('quick')}
                             className={`flex-1 p-4 rounded-xl border-2 transition-all ${
                                 promoMode === 'quick'
-                                    ? 'border-orange-500 bg-orange-50'
+                                    ? 'border-primary-500 bg-primary-50'
                                     : 'border-slate-200 hover:border-slate-300'
                             }`}
                         >
-                            <Percent className="w-6 h-6 mx-auto mb-2 text-orange-500" />
-                            <p className="font-semibold text-slate-900">Quick Addition</p>
-                            <p className="text-sm text-slate-600">Simple discount promo</p>
+                            <Percent className="w-6 h-6 mx-auto mb-2 text-primary-500" />
+                            <p className="font-semibold text-slate-900">Быстрое добавление</p>
+                            <p className="text-sm text-slate-600">Простая скидка</p>
                         </button>
                         <button
                             onClick={() => setPromoMode('detailed')}
                             className={`flex-1 p-4 rounded-xl border-2 transition-all ${
                                 promoMode === 'detailed'
-                                    ? 'border-orange-500 bg-orange-50'
+                                    ? 'border-primary-500 bg-primary-50'
                                     : 'border-slate-200 hover:border-slate-300'
                             }`}
                         >
-                            <FileText className="w-6 h-6 mx-auto mb-2 text-orange-500" />
-                            <p className="font-semibold text-slate-900">Detailed Addition</p>
-                            <p className="text-sm text-slate-600">Advanced promo with conditions</p>
+                            <FileText className="w-6 h-6 mx-auto mb-2 text-primary-500" />
+                            <p className="font-semibold text-slate-900">Детальное добавление</p>
+                            <p className="text-sm text-slate-600">Расширенная акция с условиями</p>
                         </button>
                     </div>
 
                     {/* Venue Selection */}
                     <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
-                            Venue <span className="text-red-500">*</span>
+                            Заведение <span className="text-red-500">*</span>
                         </label>
                         <select
                             value={selectedVenue}
                             onChange={(e) => setSelectedVenue(Number(e.target.value))}
-                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                         >
-                            <option value={0}>Select a venue</option>
+                            <option value={0}>Выберите заведение</option>
                             {venues.map((venue) => (
                                 <option key={venue.id} value={venue.id}>
                                     {venue.name}
@@ -177,28 +177,28 @@ const Promo: React.FC = () => {
                     {/* Title */}
                     <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
-                            Title <span className="text-red-500">*</span>
+                            Заголовок <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Summer Special Offer"
-                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                            placeholder="Летнее специальное предложение"
+                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                         />
                     </div>
 
                     {/* Description */}
                     <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
-                            Description <span className="text-red-500">*</span>
+                            Описание <span className="text-red-500">*</span>
                         </label>
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Get 20% off on all menu items..."
+                            placeholder="Получите скидку 20% на все блюда меню..."
                             rows={3}
-                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all resize-none"
+                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all resize-none"
                         />
                     </div>
 
@@ -206,7 +206,7 @@ const Promo: React.FC = () => {
                     {promoMode === 'quick' && (
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                Discount Percent <span className="text-red-500">*</span>
+                                Процент скидки <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="number"
@@ -215,7 +215,7 @@ const Promo: React.FC = () => {
                                 placeholder="20"
                                 min={0}
                                 max={100}
-                                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                             />
                         </div>
                     )}
@@ -225,28 +225,28 @@ const Promo: React.FC = () => {
                         <>
                             <div>
                                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Promo Type <span className="text-red-500">*</span>
+                                    Тип акции <span className="text-red-500">*</span>
                                 </label>
                                 <select
                                     value={promoType}
                                     onChange={(e) => setPromoType(e.target.value as PromoType)}
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                                 >
-                                    <option value="DISCOUNT">Discount</option>
-                                    <option value="SPECIAL_OFFER">Special Offer</option>
-                                    <option value="READY">Ready</option>
+                                    <option value="DISCOUNT">Скидка</option>
+                                    <option value="SPECIAL_OFFER">Специальное предложение</option>
+                                    <option value="READY">Готово</option>
                                 </select>
                             </div>
                             <div>
                                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Conditions
+                                    Условия
                                 </label>
                                 <textarea
                                     value={conditions}
                                     onChange={(e) => setConditions(e.target.value)}
-                                    placeholder="Valid for dine-in only..."
+                                    placeholder="Только для посещения заведения..."
                                     rows={3}
-                                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all resize-none"
+                                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all resize-none"
                                 />
                             </div>
                         </>
@@ -256,24 +256,24 @@ const Promo: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                Start Date <span className="text-red-500">*</span>
+                                Дата начала <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="date"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
-                                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                             />
                         </div>
                         <div>
                             <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                End Date <span className="text-red-500">*</span>
+                                Дата окончания <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="date"
                                 value={endDate}
                                 onChange={(e) => setEndDate(e.target.value)}
-                                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                             />
                         </div>
                     </div>
@@ -281,14 +281,14 @@ const Promo: React.FC = () => {
                     {/* Image URL */}
                     <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
-                            Image URL
+                            URL изображения
                         </label>
                         <input
                             type="url"
                             value={imageUrl}
                             onChange={(e) => setImageUrl(e.target.value)}
                             placeholder="https://example.com/promo.jpg"
-                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
                         />
                     </div>
                 </div>
