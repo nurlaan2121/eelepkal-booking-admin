@@ -91,248 +91,270 @@ const Venues: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6">
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900">Мои заведения</h1>
-                    <p className="text-slate-600 mt-1">Manage your venues and staff</p>
-                </div>
-                {activeTab === 'venues' ? (
-                    <button className="inline-flex items-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-orange-500/30">
-                        <Plus className="w-5 h-5 mr-2" />
-                        Добавить заведение
-                    </button>
-                ) : (
-                    <button className="inline-flex items-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-orange-500/30">
-                        <Plus className="w-5 h-5 mr-2" />
-                        Добавить администратора
-                    </button>
-                )}
-            </div>
-
-            {/* Tabs */}
-            <div className="bg-white rounded-xl border border-slate-200 p-1.5 inline-flex">
-                <button
-                    onClick={() => setActiveTab('venues')}
-                    className={`
-                        inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-all
-                        ${activeTab === 'venues'
-                            ? 'bg-orange-500 text-white shadow-md'
-                            : 'text-slate-600 hover:bg-slate-50'
-                        }
-                    `}
-                >
-                    <Building2 className="w-4 h-4 mr-2" />
-                    Заведения
-                    <span className={`ml-2 px-2.5 py-0.5 rounded-full text-xs ${activeTab === 'venues' ? 'bg-orange-600' : 'bg-slate-200'}`}>
-                        {venues.length}
-                    </span>
-                </button>
-                <button
-                    onClick={() => setActiveTab('staff')}
-                    className={`
-                        inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-all
-                        ${activeTab === 'staff'
-                            ? 'bg-orange-500 text-white shadow-md'
-                            : 'text-slate-600 hover:bg-slate-50'
-                        }
-                    `}
-                >
-                    <Users className="w-4 h-4 mr-2" />
-                    Персонал
-                    <span className={`ml-2 px-2.5 py-0.5 rounded-full text-xs ${activeTab === 'staff' ? 'bg-orange-600' : 'bg-slate-200'}`}>
-                        {admins.length}
-                    </span>
-                </button>
-            </div>
-
-            {/* Search */}
-            <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={`Search ${activeTab === 'venues' ? 'venues' : 'staff'}...`}
-                    className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
-                />
-            </div>
-
-            {/* Content */}
-            {(venuesLoading || adminsLoading) ? (
-                <div className="py-16 text-center">
-                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-                    <p className="text-slate-600 font-medium mt-4">Loading...</p>
-                </div>
-            ) : activeTab === 'venues' ? (
-                <>
-                    {/* Venues Grid */}
-                    {filteredVenues.length === 0 ? (
-                        <div className="py-16 text-center">
-                            <Building2 className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                            <p className="text-slate-600 font-medium">No venues found</p>
-                            <p className="text-slate-500 text-sm mt-1">Try adjusting your search</p>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50/30">
+            {/* Modern Header with Gradient */}
+            <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 shadow-xl shadow-orange-500/20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <h1 className="text-3xl font-bold text-white tracking-tight">
+                                Мои заведения
+                            </h1>
+                            <p className="text-orange-100 mt-1 text-sm font-medium">
+                                Управляйте вашими заведениями и персоналом
+                            </p>
                         </div>
-                    ) : (
-                        <>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                {paginatedVenues.map((venue) => (
-                                    <div
-                                        key={venue.id}
-                                        className="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-                                    >
-                                        {/* Card Header with Image */}
-                                        <div className="relative">
-                                            <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
-                                                {venue.imageUrl ? (
-                                                    <img
-                                                        src={venue.imageUrl}
-                                                        alt={venue.name}
-                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                                    />
-                                                ) : (
-                                                    <div className="w-full h-full flex items-center justify-center">
-                                                        <ImageIcon className="w-16 h-16 text-slate-400" />
-                                                    </div>
-                                                )}
-                                            </div>
-                                            
-                                            {/* Status Badge */}
-                                            <div className="absolute top-3 left-3">
-                                                {getStatusBadge(venue.status)}
-                                            </div>
+                        <button 
+                            className="inline-flex items-center px-6 py-3 bg-white hover:bg-orange-50 text-orange-600 font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                            aria-label={activeTab === 'venues' ? 'Add new venue' : 'Add new admin'}
+                        >
+                            <Plus className="w-5 h-5 mr-2" />
+                            {activeTab === 'venues' ? 'Добавить заведение' : 'Добавить администратора'}
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-                                            {/* Context Menu */}
-                                            <button className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-lg hover:bg-white transition-colors shadow-sm">
-                                                <MoreVertical className="w-4 h-4 text-slate-600" />
-                                            </button>
-                                        </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                {/* Modern Tab Navigation */}
+                <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-2 mb-8 inline-flex gap-2">
+                    <button
+                        onClick={() => { setActiveTab('venues'); setCurrentPage(1); }}
+                        className={`
+                            inline-flex items-center px-6 py-3 rounded-xl text-sm font-bold transition-all duration-200
+                            ${activeTab === 'venues'
+                                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                            }
+                        `}
+                    >
+                        <Building2 className="w-5 h-5 mr-2" />
+                        Заведения
+                        <span className={`ml-2 px-3 py-1 rounded-lg text-xs font-bold ${
+                            activeTab === 'venues' ? 'bg-white/20' : 'bg-slate-100'
+                        }`}>
+                            {venues.length}
+                        </span>
+                    </button>
+                    <button
+                        onClick={() => { setActiveTab('staff'); setCurrentPage(1); }}
+                        className={`
+                            inline-flex items-center px-6 py-3 rounded-xl text-sm font-bold transition-all duration-200
+                            ${activeTab === 'staff'
+                                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                            }
+                        `}
+                    >
+                        <Users className="w-5 h-5 mr-2" />
+                        Персонал
+                        <span className={`ml-2 px-3 py-1 rounded-lg text-xs font-bold ${
+                            activeTab === 'staff' ? 'bg-white/20' : 'bg-slate-100'
+                        }`}>
+                            {admins.length}
+                        </span>
+                    </button>
+                </div>
 
-                                        {/* Card Content */}
-                                        <div className="p-5 space-y-4">
-                                            {/* Title */}
-                                            <h3 className="text-lg font-bold text-slate-900 line-clamp-1" title={venue.name}>
-                                                {venue.name}
-                                            </h3>
+                {/* Modern Search Bar */}
+                <div className="relative mb-8">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder={`Поиск ${activeTab === 'venues' ? 'заведений' : 'персонала'}...`}
+                        className="w-full pl-14 pr-6 py-4 bg-white border-2 border-slate-200 rounded-2xl focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all text-base shadow-sm hover:shadow-md"
+                    />
+                </div>
 
-                                            {/* Location */}
-                                            <div className="flex items-start gap-2 text-slate-600">
-                                                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-orange-500" />
-                                                <p className="text-sm line-clamp-2">{venue.address}</p>
-                                            </div>
-
-                                            {/* Manager */}
-                                            <div className="flex items-center gap-2 text-slate-600">
-                                                <Users className="w-4 h-4 flex-shrink-0 text-orange-500" />
-                                                <p className="text-sm">{venue.adminName}</p>
-                                            </div>
-
-                                            {/* Divider */}
-                                            <div className="border-t border-slate-200" />
-
-                                            {/* Bottom Info */}
-                                            <div className="flex items-center justify-between">
-                                                {/* Average Price */}
-                                                <div>
-                                                    <p className="text-xs text-slate-500 mb-0.5">Средний чек:</p>
-                                                    <p className="text-sm font-bold text-slate-900">
-                                                        {venue.averagePrice && venue.averagePrice > 0
-                                                            ? `${venue.averagePrice} сом`
-                                                            : '—'}
-                                                    </p>
-                                                </div>
-
-                                                {/* Rating */}
-                                                <div className="text-right">
-                                                    <p className="text-xs text-slate-500 mb-0.5">Рейтинг:</p>
-                                                    <StarRating rating={venue.rating} />
-                                                </div>
-                                            </div>
-
-                                            {/* Action Buttons */}
-                                            <div className="flex items-center gap-2 pt-2">
-                                                <button
-                                                    className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
-                                                    title="Edit"
-                                                >
-                                                    <Edit2 className="w-4 h-4 mr-1.5" />
-                                                    Изменить
-                                                </button>
-                                                <button
-                                                    className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
-                                                    title="View"
-                                                >
-                                                    <Eye className="w-4 h-4 text-slate-600" />
-                                                </button>
-                                                <button
-                                                    className="p-2 hover:bg-red-50 rounded-lg transition-colors"
-                                                    title="Delete"
-                                                >
-                                                    <Trash2 className="w-4 h-4 text-red-600" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+                {/* Content Area */}
+                {(venuesLoading || adminsLoading) ? (
+                    <div className="py-24 text-center">
+                        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-orange-100 mb-6">
+                            <div className="animate-spin rounded-full h-10 w-10 border-4 border-orange-500 border-t-transparent"></div>
+                        </div>
+                        <p className="text-slate-600 font-semibold text-lg">Загрузка...</p>
+                        <p className="text-slate-500 text-sm mt-2">Пожалуйста, подождите</p>
+                    </div>
+                ) : activeTab === 'venues' ? (
+                    <>
+                        {/* Venues Grid - Modern Card Design */}
+                        {filteredVenues.length === 0 ? (
+                            <div className="py-24 text-center bg-white rounded-3xl shadow-sm border border-slate-200/60">
+                                <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-slate-100 mb-6">
+                                    <Building2 className="w-12 h-12 text-slate-400" />
+                                </div>
+                                <p className="text-slate-900 font-bold text-xl mb-2">Заведения не найдены</p>
+                                <p className="text-slate-500">Попробуйте изменить параметры поиска</p>
                             </div>
-                            
-                            {/* Pagination */}
-                            <Pagination
-                                currentPage={currentPage}
-                                totalPages={totalVenuesPages}
-                                totalItems={filteredVenues.length}
-                                itemsPerPage={itemsPerPage}
-                                onPageChange={handlePageChange}
-                            />
-                        </>
-                    )}
-                </>
-            ) : (
-                <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-                    {/* Table Header */}
+                        ) : (
+                            <>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {paginatedVenues.map((venue) => (
+                                        <div
+                                            key={venue.id}
+                                            className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200/60 hover:border-orange-300 transform hover:-translate-y-1"
+                                        >
+                                            {/* Card Image Section - Left Side Layout */}
+                                            <div className="flex flex-col sm:flex-row">
+                                                {/* Image Container */}
+                                                <div className="sm:w-40 sm:flex-shrink-0 relative overflow-hidden">
+                                                    <div className="aspect-[4/3] sm:aspect-auto sm:h-full bg-gradient-to-br from-slate-100 to-slate-200">
+                                                        {venue.imageUrl ? (
+                                                            <img
+                                                                src={venue.imageUrl}
+                                                                alt={venue.name}
+                                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                            />
+                                                        ) : (
+                                                            <div className="w-full h-full flex items-center justify-center">
+                                                                <ImageIcon className="w-12 h-12 text-slate-400" />
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    
+                                                    {/* Status Badge - Top Left Overlay */}
+                                                    <div className="absolute top-3 left-3">
+                                                        {getStatusBadge(venue.status)}
+                                                    </div>
+                                                </div>
+
+                                                {/* Card Content - Right Side */}
+                                                <div className="flex-1 p-5 flex flex-col">
+                                                    {/* Title & Context Menu */}
+                                                    <div className="flex items-start justify-between mb-3">
+                                                        <h3 className="text-lg font-bold text-slate-900 line-clamp-1 group-hover:text-orange-600 transition-colors" title={venue.name}>
+                                                            {venue.name}
+                                                        </h3>
+                                                        <button 
+                                                            className="p-2 hover:bg-slate-100 rounded-lg transition-colors flex-shrink-0 ml-2"
+                                                            aria-label="Actions"
+                                                        >
+                                                            <MoreVertical className="w-5 h-5 text-slate-600" />
+                                                        </button>
+                                                    </div>
+
+                                                    {/* Location Row */}
+                                                    <div className="flex items-start gap-2.5 text-slate-600 mb-2.5">
+                                                        <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-orange-500" />
+                                                        <p className="text-sm line-clamp-2 leading-relaxed">{venue.address}</p>
+                                                    </div>
+
+                                                    {/* Manager Row */}
+                                                    <div className="flex items-center gap-2.5 text-slate-600 mb-4">
+                                                        <Users className="w-4 h-4 flex-shrink-0 text-orange-500" />
+                                                        <p className="text-sm font-medium">{venue.adminName || 'Не назначен'}</p>
+                                                    </div>
+
+                                                    {/* Divider */}
+                                                    <div className="border-t border-slate-200 mb-4" />
+
+                                                    {/* Bottom Info Row */}
+                                                    <div className="flex items-center justify-between mt-auto">
+                                                        {/* Average Price */}
+                                                        <div>
+                                                            <p className="text-xs text-slate-500 mb-1 font-medium">Средний чек:</p>
+                                                            <p className="text-base font-bold text-slate-900">
+                                                                {venue.averagePrice && venue.averagePrice > 0
+                                                                    ? `${venue.averagePrice} сом`
+                                                                    : '—'}
+                                                            </p>
+                                                        </div>
+
+                                                        {/* Rating */}
+                                                        <div className="text-right">
+                                                            <p className="text-xs text-slate-500 mb-1 font-medium">Рейтинг:</p>
+                                                            <StarRating rating={venue.rating} />
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Action Buttons */}
+                                                    <div className="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+                                                        <button
+                                                            className="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
+                                                            aria-label="Edit venue"
+                                                        >
+                                                            <Edit2 className="w-4 h-4 mr-1.5" />
+                                                            Изменить
+                                                        </button>
+                                                        <button
+                                                            className="p-2.5 hover:bg-slate-100 rounded-xl transition-colors"
+                                                            aria-label="View venue"
+                                                        >
+                                                            <Eye className="w-4 h-4 text-slate-600" />
+                                                        </button>
+                                                        <button
+                                                            className="p-2.5 hover:bg-red-50 rounded-xl transition-colors"
+                                                            aria-label="Delete venue"
+                                                        >
+                                                            <Trash2 className="w-4 h-4 text-red-600" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                
+                                {/* Modern Pagination */}
+                                <div className="mt-8">
+                                    <Pagination
+                                        currentPage={currentPage}
+                                        totalPages={totalVenuesPages}
+                                        totalItems={filteredVenues.length}
+                                        itemsPerPage={itemsPerPage}
+                                        onPageChange={handlePageChange}
+                                    />
+                                </div>
+                            </>
+                        )}
+                    </>
+                ) : (
+                <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
+                    {/* Modern Table Header */}
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>
-                                <tr className="bg-slate-50 border-b border-slate-200">
-                                    <th className="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                <tr className="bg-gradient-to-r from-slate-50 to-slate-100/50 border-b-2 border-slate-200">
+                                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">
                                         Сотрудник
                                     </th>
-                                    <th className="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider hidden md:table-cell">
+                                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider hidden md:table-cell">
                                         Заведение
                                     </th>
-                                    <th className="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">
                                         Роль
                                     </th>
-                                    <th className="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    <th className="text-left px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">
                                         Статус
                                     </th>
-                                    <th className="text-right px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    <th className="text-right px-6 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider">
                                         Действия
                                     </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
-                                {paginatedStaff.map((staffMember) => (
-                                    <tr key={staffMember.id} className="hover:bg-slate-50 transition-colors">
+                                {paginatedStaff.map((staffMember, index) => (
+                                    <tr key={staffMember.id} className={`hover:bg-orange-50/50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center">
-                                                <div className="w-10 h-10 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                                    <span className="text-sm font-bold text-orange-600">
+                                                <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-md">
+                                                    <span className="text-base font-bold text-white">
                                                         {staffMember.fullName.charAt(0).toUpperCase()}
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <p className="font-semibold text-slate-900">{staffMember.fullName}</p>
+                                                    <p className="font-bold text-slate-900">{staffMember.fullName}</p>
                                                     <p className="text-sm text-slate-600">{staffMember.email}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 hidden md:table-cell">
-                                            <span className="text-sm text-slate-700">{staffMember.venueName || 'Not assigned'}</span>
+                                            <span className="text-sm font-medium text-slate-700">{staffMember.venueName || 'Не назначено'}</span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
+                                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800">
                                                 Admin
                                             </span>
                                         </td>
@@ -341,13 +363,18 @@ const Venues: React.FC = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-end gap-2">
-                                                <button className="p-2 hover:bg-orange-50 rounded-lg transition-colors" title="Edit">
+                                                <button 
+                                                    className="p-2.5 hover:bg-orange-100 rounded-xl transition-colors" 
+                                                    title="Edit"
+                                                    aria-label="Edit admin"
+                                                >
                                                     <Edit2 className="w-4 h-4 text-orange-600" />
                                                 </button>
                                                 <button 
-                                                    className="p-2 hover:bg-red-50 rounded-lg transition-colors" 
+                                                    className="p-2.5 hover:bg-red-100 rounded-xl transition-colors" 
                                                     title="Delete"
                                                     onClick={() => handleDeleteAdmin(staffMember.id)}
+                                                    aria-label="Delete admin"
                                                 >
                                                     <Trash2 className="w-4 h-4 text-red-600" />
                                                 </button>
@@ -361,14 +388,16 @@ const Venues: React.FC = () => {
 
                     {/* Empty State */}
                     {filteredStaff.length === 0 && (
-                        <div className="py-16 text-center">
-                            <Users className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                            <p className="text-slate-600 font-medium">No staff found</p>
-                            <p className="text-slate-500 text-sm mt-1">Try adjusting your search</p>
+                        <div className="py-24 text-center">
+                            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-slate-100 mb-6">
+                                <Users className="w-12 h-12 text-slate-400" />
+                            </div>
+                            <p className="text-slate-900 font-bold text-xl mb-2">Персонал не найден</p>
+                            <p className="text-slate-500">Попробуйте изменить параметры поиска</p>
                         </div>
                     )}
 
-                    {/* Pagination */}
+                    {/* Modern Pagination */}
                     <Pagination
                         currentPage={currentPage}
                         totalPages={totalStaffPages}
@@ -378,6 +407,7 @@ const Venues: React.FC = () => {
                     />
                 </div>
             )}
+            </div>
         </div>
     );
 };
